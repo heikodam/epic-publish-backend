@@ -67,17 +67,6 @@ app.get('/ads', auth, async (req, responds) => {
         responds.status(404).send(ads);
     }
 
-
-
-    // adHandlerRequestor.send({type: 'viewAds', userId: req.user._id}, (err, res) => {
-    //     console.log("Cote Response: ", err, res)
-    //     if(err){
-    //         responds.status(400).send("Something went wrong")
-    //     } else {
-    //         responds.send(res);
-    //     }
-        
-    // });
 })
 
 
