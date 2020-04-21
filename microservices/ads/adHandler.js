@@ -1,30 +1,10 @@
 const cote = require("cote");
-const mongoose = require('mongoose');
-const {MongoClient} = require('mongodb')
-
 
 const encrypt = require("./crypt");
 const MarketLogin = require('./marketLoginModel');
+
+require("../../database/mongoose")
 const Ads = require('./adModel.js');
-
-
-const uri = process.env.MONGODB_URL;
-
-
-mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true
-}, (err) => {
-    if(err){
-        console.log("There was an error connecting to the db in adHandler", err)
-    } else {
-        console.log("AdHandler connected to DB")
-    }
-})
-
-
 
 
 
@@ -59,8 +39,6 @@ adHandlerResponder.on('viewAds', async (req, cb) => {
     try {
         Ads.find({}).then((ads) => {
             console.log(ads)
-            // ads.imgUpload = {}
-            // ads.imgs = {}
             cb(null, "ads")
         })
     } catch {
@@ -78,11 +56,6 @@ adHandlerResponder.on('saveAd', async (req, cb) => {
     try {
 
         var newAd = {...req.formValues}
-        // console.log(btoa(unescape(encodeURIComponent(req.imgs[0].data))))
-
-        // var base64en = req.imgs[0].data.toString('base64')
-        // var base64en = "empty"
-        // console.log(base64en)
         newAd.imgs = req.imgs[0]
         newAd.date = new Date()
         newAd.userId = req.userId
@@ -99,8 +72,4 @@ adHandlerResponder.on('saveAd', async (req, cb) => {
         cb("Something went wrong", null)
 
     }
-
-    
-
-
 });

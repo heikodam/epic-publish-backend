@@ -39,6 +39,7 @@ const userSchema = new mongoose.Schema({
         }
 });
 
+// FUNCTION NOT WORKING
 userSchema.statics.findByCredentials = async (email, password) => {
     console.log("Middleware is Running now now, This should never run");
     return {name: "Middaleware Success"}
@@ -58,15 +59,8 @@ userSchema.statics.findByCredentials = async (email, password) => {
 }
 
 userSchema.methods.isUser = async function(password) {
-    // console.log("In Middleware");
-    // const user = await User.findOne({ email })
 
     const user = this;
-
-    // if (!user) {
-    //     return false
-    // }
-    // console.log(password, user.password);
     const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {
@@ -77,18 +71,12 @@ userSchema.methods.isUser = async function(password) {
 }
 
 userSchema.methods.generateAuthToken = async function () {
-    // console.log("Starting with Token Middalware");
+
     const user = this
     const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)
 
-    // console.log("Token in Middalware", token);
-
-    // user.tokens = user.tokens.concat({ token })
     user.set('token', token);
     await user.save()
-
-    // console.log("user")
-
     return token
 }
 
