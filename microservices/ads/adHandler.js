@@ -38,7 +38,6 @@ adHandlerResponder.on('viewAds', async (req, cb) => {
 
     try {
         Ads.find({}).then((ads) => {
-            console.log(ads)
             cb(null, "ads")
         })
     } catch {
@@ -60,15 +59,12 @@ adHandlerResponder.on('saveAd', async (req, cb) => {
         newAd.date = new Date()
         newAd.userId = req.userId
 
-        console.log(newAd)
-
         const adsDB = new Ads(newAd)
         await adsDB.save()
 
 
         cb(null, "Successfully saved")
     } catch (err) {
-        console.log(err)
         cb("Something went wrong", null)
 
     }
