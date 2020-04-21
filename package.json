@@ -20,10 +20,15 @@
     "validator": "^13.0.0"
   },
   "devDependencies": {
+    "concurrently": "^5.1.0",
+    "env-cmd": "^10.1.0",
     "jest": "^25.4.0"
   },
   "scripts": {
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "webapi": "env-cmd -f ./config/dev.env nodemon webAPIGateway/webAPIGateway.js",
+    "identity": "env-cmd -f ./config/dev.env nodemon microservices/identityHandler/identityHandler.js ",
+    "ads": "env-cmd -f ./config/dev.env nodemon microservices/ads/adHandler.js" 
   },
   "keywords": [],
   "author": "",

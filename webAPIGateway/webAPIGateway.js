@@ -203,7 +203,7 @@ const identityRequestor = new cote.Requester({
     namespace: 'identityHandler'
 });
 
-
-app.listen(4545, () => {
-    console.log("Sever is up and Running on Port 4545, Happy Experementing")
+const port = process.env.PORT
+app.listen(port, () => {
+    console.log(`Sever is up and Running on Port ${port}, Happy Experementing`)
 })

@@ -7,14 +7,9 @@ const encrypt = require("./crypt");
 const MarketLogin = require('./marketLoginModel');
 const Ads = require('./adModel.js');
 
-const username = "heikodam";
-const password = "mongodbPass";
-const dbName = "multiPublish";
-const collection = "ads";
 
-const uri = `mongodb://${username}:${password}@cluster0-shard-00-00-zg4z1.mongodb.net:27017,cluster0-shard-00-01-zg4z1.mongodb.net:27017,cluster0-shard-00-02-zg4z1.mongodb.net:27017/${dbName}?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority`;
+const uri = process.env.MONGODB_URL;
 
-const client = new MongoClient(uri, { useUnifiedTopology: true });
 
 mongoose.connect(uri, {
     useNewUrlParser: true,
@@ -25,7 +20,7 @@ mongoose.connect(uri, {
     if(err){
         console.log("There was an error connecting to the db in adHandler", err)
     } else {
-        console.log("Connected to db through adHandler")
+        console.log("AdHandler connected to DB")
     }
 })
 
