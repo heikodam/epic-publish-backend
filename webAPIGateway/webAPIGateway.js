@@ -15,14 +15,7 @@ const mongoose = require('mongoose');
 const {MongoClient} = require('mongodb')
 const Ads = require('../microservices/ads/adModel');
 
-const username = "heikodam";
-const password = "mongodbPass";
-const dbName = "multiPublish";
-const collection = "ads";
-
-const uri = `mongodb://${username}:${password}@cluster0-shard-00-00-zg4z1.mongodb.net:27017,cluster0-shard-00-01-zg4z1.mongodb.net:27017,cluster0-shard-00-02-zg4z1.mongodb.net:27017/${dbName}?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority`;
-
-const client = new MongoClient(uri, { useUnifiedTopology: true });
+const uri = process.env.MONGODB_URL;
 
 mongoose.connect(uri, {
     useNewUrlParser: true,
@@ -31,9 +24,9 @@ mongoose.connect(uri, {
     useUnifiedTopology: true
 }, (err) => {
     if(err){
-        console.log("There was an error connecting to the db in adHandler", err)
+        console.log("There was an error connecting to the db in WebAPIGateway", err)
     } else {
-        console.log("Connected to db through adHandler")
+        console.log("WebAPIGateway connected to DB")
     }
 })
 

@@ -79,7 +79,7 @@ userSchema.methods.isUser = async function(password) {
 userSchema.methods.generateAuthToken = async function () {
     // console.log("Starting with Token Middalware");
     const user = this
-    const token = jwt.sign({ _id: user._id.toString() }, 'superdupersecretKey')
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)
 
     // console.log("Token in Middalware", token);
 

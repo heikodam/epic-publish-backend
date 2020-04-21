@@ -2,12 +2,7 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = require('../../microservices/identityHandler/userModel');
 
-const username = "heikodam";
-const password = "mongodbPass";
-const dbName = "multiPublish";
-const collection = "ads";
-
-const uri = `mongodb://${username}:${password}@cluster0-shard-00-00-zg4z1.mongodb.net:27017,cluster0-shard-00-01-zg4z1.mongodb.net:27017,cluster0-shard-00-02-zg4z1.mongodb.net:27017/${dbName}?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority`;
+const uri = process.env.MONGODB_URL;
 
 
 mongoose.connect(uri, {
@@ -23,7 +18,7 @@ const auth = async (req, res, next) => {
         // console.log(req.cookies.token);
         // const token = "123"
         const token = req.cookies.token;
-        const decoded = jwt.verify(token, 'superdupersecretKey');
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         // console.log("Now here");
         const user = await User.findOne({ _id: decoded._id, 'token': token });
         // console.log('getting to the end');
