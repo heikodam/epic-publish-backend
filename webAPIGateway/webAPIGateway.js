@@ -107,9 +107,6 @@ app.post('/adPictures', upload.single('pictures'), async (req, res) => {
     res.status(400).send({ error: error.message })
 })
 
-
-
-
 const adHandlerRequestor = new cote.Requester({
     name: 'ad Handler requestor',
     namespace: 'adHandler'

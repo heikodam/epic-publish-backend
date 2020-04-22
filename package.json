@@ -25,7 +25,7 @@
   },
   "scripts": {
     "test": "env-cmd -f ./config/test.env jest --watch",
-    "webapi": "env-cmd -f ./config/dev.env nodemon webAPIGateway/webAPIGateway.js",
+    "webapi": "env-cmd -f ./config/dev.env nodemon webAPIGateway/index.js",
     "identity": "env-cmd -f ./config/dev.env nodemon microservices/identityHandler/identityHandler.js ",
     "ads": "env-cmd -f ./config/dev.env nodemon microservices/ads/adHandler.js"
   },
