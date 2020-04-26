@@ -14,10 +14,10 @@ const router = new express.Router()
 router.get('/ads', auth, async (req, responds) => {
     try {
         Ads.find({userId: req.user._id}).then((ads) => {
-            responds.send(ads);
+            responds.status(200).send(ads);
         })
     } catch {
-        responds.status(404).send(ads);
+        responds.status(404).send();
     }
 
 })
@@ -32,7 +32,10 @@ router.post('/create-ad', auth, upload.single('imgUpload'), (req, responds) => {
         imgs = [req.file.buffer]
     }
     adHandlerRequestor.send({type: 'saveAd', formValues: formValues, imgs: imgs, userId: req.user._id}, (err, res) => {
-        responds.send("Successfully saved")
+        if(err){
+            responds.status(400).send()
+        }
+        responds.status(201).send("Successfully saved")
     });
 })
 

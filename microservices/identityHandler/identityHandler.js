@@ -12,12 +12,16 @@ const identityResponder = new cote.Responder({
 });
 
 
+
+
+
+
 identityResponder.on('createUser', async (req, cb) => {
     try {
         const user = new User(req.user)
         await user.save()
         const token = await user.generateAuthToken()
-        cb(null, {user, token})
+        cb(null, {user: {_id: user._id, name: user.name, email: user.email}, token})
     } catch (error) {
         cb("Unable to Sign You up", null)
     }

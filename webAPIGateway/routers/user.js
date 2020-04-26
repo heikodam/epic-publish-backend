@@ -1,18 +1,21 @@
 const express = require("express");
 const cote = require("cote");
 
+require("../../database/mongoose")
+
+
 const router = new express.Router()
 
-const auth = require("../middelware/auth");
 
 
-router.post('/createUser', (req, res) => {
+router.post('/createUser', async (req, res) => {
+
     identityRequestor.send({type: 'createUser', user: req.body}, (error, user) => {
         if(error){
             res.status(400).send(error);
         } else{
             res.cookie("token", user.token);
-            res.send(user);
+            res.status(201).send(user);
         }
     });
     
@@ -24,7 +27,7 @@ router.post('/login', async (req, res) => {
             res.status(400).send(error);
         } else {
             res.cookie("token", user.token);
-            res.send(user);
+            res.status(200).send(user);
         }
         
     })
