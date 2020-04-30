@@ -14,13 +14,13 @@ mongoose.connect(uri, {
 
 const auth = async (req, res, next) => {
     try {
-        console.log(req)
+        // console.log(req)
         const token = req.cookies.token;
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findOne({ _id: decoded._id, 'token': token });
 
-        console.log("Id: ", decoded._id)
-        console.log("User: ", user)
+        // console.log("Id: ", decoded._id)
+        // console.log("User: ", user)
 
         if (!user) {
         res.status(401).send('Please authenticate.');

@@ -14,6 +14,17 @@ const adHandlerResponder = new cote.Responder({
 });
 
 
+adHandlerResponder.on('deleteAd',async (req,cb) => {
+    try{
+        await Ads.findOneAndDelete({_id: req.adId, userId: req.userId})
+        cb(null, "Ad deleted")
+
+    } catch (err) {
+        cb(err, null)
+    }
+})
+
+
 
 adHandlerResponder.on('saveMarketLogin', async (req, cb) => {
     try {

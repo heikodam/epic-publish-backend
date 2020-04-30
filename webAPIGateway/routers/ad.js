@@ -52,6 +52,19 @@ router.post('/market-user-data', auth, async (req, responds) => {
 });
 
 
+
+router.delete('/ad/:id', auth, async (req, responds) => {
+    adHandlerRequestor.send({type: 'deleteAd', adId: req.params.id, userId: req.user._id}, (err, res) => {
+        if(err){
+            responds.status(400).send("Something went wrong")
+        } else {
+            responds.status(200).send("Ad Deleted")
+        }
+    })
+})
+
+
+
 router.post('/adPictures', upload.single('pictures'), async (req, res) => {
     res.send()
 }, (error, req, res, next) => {
