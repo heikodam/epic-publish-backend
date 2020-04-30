@@ -44,9 +44,9 @@ test("Should create ad for UserTwo", async () => {
 
 test("Should delete Ad", async () => {
     await request(app)
-    .post('/delete-ad')
+    .delete('/ad/' + adOneId)
     .set('Cookie', [`token=${userOne.token}`])
-    .send({adId: adOneId})
+    .send()
     .expect(200)
 
     // Check if ad was deleted
