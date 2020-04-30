@@ -1,6 +1,8 @@
 const cote = require("cote");
 const jwt = require('jsonwebtoken');
 
+// const {blacklist} = require("../../webAPIGateway/middelware/blacklist");
+
 require("../../database/mongoose")
 const User = require('./userModel');
 
@@ -51,19 +53,6 @@ identityResponder.on('login', async (req, cb) => {
 });
 
 
-identityResponder.on('logout', async (req, cb) => {
-    try {
-
-        const decoded = jwt.verify(req.token, process.env.JWT_SECRET);
-        await User.findByIdAndUpdate(decoded._id, {token: undefined}, {new: true, runValidators: true});
-        cb(null, "Logged out")
-
-    } catch (error) {
-        console.log("Error is thrown in Logout", error);
-        cb("You are already logged out", null)
-    }
-});
-
 identityResponder.on('emailUsed', async (req, cb) => {
     try {
 
@@ -80,3 +69,36 @@ identityResponder.on('emailUsed', async (req, cb) => {
         cb("There was an Error", null)
     }
 });
+
+
+var blacklist = ["wrong"]
+
+const updateBlacklist = (newVal) => {
+    blacklist[0] = "right"
+    blacklist.push(newVal)
+}
+
+identityResponder.on('logout', async (req, cb) => {
+    try {
+        
+        const decoded = jwt.verify(req.token, process.env.JWT_SECRET);
+        updateBlacklist(req.token)
+        // blacklist.push(req.token)
+        console.log("Blacklist in IdentityHandler: ", blacklist)
+        await User.findByIdAndUpdate(decoded._id, {token: undefined}, {new: true, runValidators: true});
+        cb(null, "Logged out")
+        
+
+    } catch (error) {
+        console.log("Error is thrown in Logout", error);
+        cb("You are already logged out", null)
+    }
+});
+
+
+
+
+identityResponder.on('getBlacklist', async (req, cb) => {
+    cb(null, blacklist)
+    cb(null, blacklist)
+})
