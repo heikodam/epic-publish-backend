@@ -94,6 +94,11 @@ module.exports = {
     userOne,
     userTwoId,
     userTwo,
+    adOneId,
+    adOne,
+    adTwoId,
+    adTwo,
+    adThreeId,
     adThree,
     setupDB,
     clearDB

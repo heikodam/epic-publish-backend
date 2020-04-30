@@ -1,11 +1,9 @@
 const request = require('supertest');
 const app = require('../webAPIGateway/app');
-const User = require('../microservices/identityHandler/userModel');
-const {userOneId, userOne, userTwo, adThree, setupDB, clearDB} = require('./fixtures/addb');
+const Ad = require('../microservices/ads/adModel');
+const {userOneId, userOne, userTwo, adOneId, adThree, setupDB, clearDB} = require('./fixtures/addb');
 
-// beforeAll(clearDB)
 beforeEach(setupDB);
-// afterAll(clearDB)
 
 
 test("Should get all ads for UserOne", async () => {
@@ -40,3 +38,16 @@ test("Should create ad for UserTwo", async () => {
 
 
 });
+
+test("Should delete Ad", async () => {
+    await request(app)
+    .post('/delete-ad')
+    .set('Cookie', [`token=${userOne.token}`])
+    .send({adId: adOneId})
+    .expect(200)
+
+    // Check if ad was deleted
+    const ad = await Ad.findById(adOneId);
+    expect(ad).toHaveLength(0)
+
+})
