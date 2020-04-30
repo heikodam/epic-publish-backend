@@ -26,15 +26,18 @@ test("Should create ad for UserTwo", async () => {
     .expect(201)
 
 
-    // Check if ad was added
-    const response = await request(app)
-    .get('/ads')
-    .set('Cookie', [`token=${userTwo.token}`])
-    .send()
-    .expect(200)
+    const ad = await Ad.findById(adThreeId)
+    expect(ad).toHaveLength(1)
 
-    // Check if it only got the one for the right user, there are 2 ads saved in the db
-    expect(response.body.length).toEqual(1)
+    // // Check if ad was added
+    // const response = await request(app)
+    // .get('/ads')
+    // .set('Cookie', [`token=${userTwo.token}`])
+    // .send()
+    // .expect(200)
+
+    // // Check if it only got the one for the right user, there are 2 ads saved in the db
+    // expect(response.body.length).toEqual(1)
 
 
 });
