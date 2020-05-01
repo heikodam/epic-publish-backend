@@ -5,7 +5,12 @@ const jwt = require('jsonwebtoken')
 
 
 const userSchema = new mongoose.Schema({
-    name: {
+    firstname: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    surname: {
         type: String,
         required: true,
         trim: true
@@ -32,6 +37,10 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Password cannot contain "password"')
             }
         }
+    },
+    date: {
+        type: Date,
+        required: true
     },
     token:  {
             type: String,

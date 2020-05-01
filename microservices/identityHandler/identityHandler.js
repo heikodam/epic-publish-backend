@@ -21,6 +21,7 @@ const identityResponder = new cote.Responder({
 identityResponder.on('createUser', async (req, cb) => {
     try {
         const user = new User(req.user)
+        user.date = new Date()
         await user.save()
         const token = await user.generateAuthToken()
         cb(null, {user: {_id: user._id, name: user.name, email: user.email}, token})

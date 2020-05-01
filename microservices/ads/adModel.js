@@ -6,9 +6,28 @@ const adSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    date: {
+        type: Date,
+        required: true
+    },
+    title: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    }, 
+    rent: {
+        type: Number,
+        required: true
+    },
+    marketplaces: {
+        type: [String]
+    },
     imgs: {
         type: Buffer
-    }
+    },
 }, { strict: false });
 
 const ads = mongoose.model('ads', adSchema)

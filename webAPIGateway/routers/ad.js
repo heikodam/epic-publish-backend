@@ -34,8 +34,9 @@ router.post('/create-ad', auth, upload.single('imgUpload'), (req, responds) => {
     adHandlerRequestor.send({type: 'saveAd', formValues: formValues, imgs: imgs, userId: req.user._id}, (err, res) => {
         if(err){
             responds.status(400).send()
+        } else {            
+            responds.status(201).send("Successfully saved")
         }
-        responds.status(201).send("Successfully saved")
     });
 })
 
