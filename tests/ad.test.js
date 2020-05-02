@@ -68,7 +68,7 @@ test("Should get data of specific ad", async () => {
     })
 })
 
-test("Delete ALL Ads of a User", async () => {
+test("Should Delete ALL Ads of a User", async () => {
     await request(app)
     .delete('/ads/me')
     .set('Cookie', [`token=${userOneToken}`])
@@ -78,4 +78,20 @@ test("Delete ALL Ads of a User", async () => {
     // Check if ads were deleted
     const ad = await Ad.find({userId: userOneId});
     expect(ad).toHaveLength(0)
+})
+
+test("Should Patch a Ad", async () => {
+    const response = await request(app)
+        .patch('/ads/me/' + adOneId.toString)
+        .set('Cookie', [`token=${userOneToken}`])
+        .send({
+            title: "Biggest and most expensive house in the World for Free",
+            phoneNumber: "000000000000",
+        })
+        .expect(200)
+    
+    // See if Firstname was updated
+    const ad = await Ad.findById(userOneId.toString())
+    expect(user.title).toBe("Biggest and most expensive house in the World for Free")
+    expect(user.phoneNumber).toBe("000000000000")
 })
