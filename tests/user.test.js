@@ -6,11 +6,11 @@ const {userOneId, userOne, setupDB, clearDB} = require('./fixtures/db');
 // beforeAll(clearDB)
 beforeEach(setupDB);
 
-test('Should create user', async () => {
+test('users', async () => {
 
     // Creat the user and get the response
     const response = await request(app)
-    .post('/createUser')
+    .post('/users')
     .send({
         firstname: 'Uwe',
         surname: "Stein",
