@@ -67,6 +67,23 @@ marketplaceResponder.on('deleteMarketplaces',async (req,cb) => {
     }
 })
 
+marketplaceResponder.on('getMarketplace', async (req, cb) => {
+
+    try {
+        const marketplace = await Marketplace.findById(req.marketplaceId.toString())
+        if(!marketplace){
+            cb("Bad Request", null)
+        } else {
+            cb(null, marketplace)
+        }
+        
+
+    } catch (error) {
+        console.log(error)
+        cb("You have no ads", null)
+    }
+});
+
 // marketplaceResponder.on('updateAd', async (req,cb) => {
 //     try {
 //         const updates = Object.keys(req.body)
@@ -91,22 +108,7 @@ marketplaceResponder.on('deleteMarketplaces',async (req,cb) => {
 
 
 
-// marketplaceResponder.on('getAd', async (req, cb) => {
 
-//     try {
-//         const ad = await Ads.findById(req.adId.toString())
-//         if(!ad){
-//             cb("Bad Request", null)
-//         } else {
-//             cb(null, ad)
-//         }
-        
-
-//     } catch (error) {
-//         console.log(error)
-//         cb("You have no ads", null)
-//     }
-// });
 
 // marketplaceResponder.on('saveAd', async (req, cb) => {
 

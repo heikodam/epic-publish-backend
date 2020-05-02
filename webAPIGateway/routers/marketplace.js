@@ -50,6 +50,16 @@ router.delete('/marketplaces/me', auth, async (req, responds) => {
     })
 })
 
+router.get('/marketplaces/me/:id', auth, async (req, responds) => {
+    marketplaceRequestor.send({type: 'getMarketplace', user: req.user, marketplaceId: req.params.id}, (err, marketplace) => {
+        if(err){
+            responds.status(404).send()
+        } else{
+            responds.status(200).send(marketplace)
+        }
+    });
+})
+
 // router.post('/marketplaces', async (req, responds) => {
     
 //     marketplaceRequestor.send({type: 'saveAd', formValues: formValues, imgs: savedImgs, userId: req.user._id}, (err, res) => {
@@ -67,15 +77,7 @@ router.delete('/marketplaces/me', auth, async (req, responds) => {
 
 
 
-// router.get('/marketplaces/me/:id', auth, async (req, responds) => {
-//     marketplaceRequestor.send({type: 'getAd', user: req.user, adId: req.params.id}, (err, ad) => {
-//         if(err){
-//             responds.status(404).send()
-//         } else{
-//             responds.status(200).send(ad)
-//         }
-//     });
-// })
+
 
 // router.patch('/marketplaces/me/:id', auth, async (req, responds) => {
 //     marketplaceRequestor.send({type: 'updateAd', user: req.user, adId: req.params.id, body: req.body}, (err, ad) => {
