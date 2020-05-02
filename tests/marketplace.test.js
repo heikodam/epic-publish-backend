@@ -63,21 +63,21 @@ test("Should Delete ALL Marketplaces of a User", async () => {
     expect(marketplace).toHaveLength(0)
 })
 
-// test("Should get data of specific ad", async () => {
-//     const response = await request(app)
-//     .get("/ads/me/" + adTwoId.toString())
-//     .set('Cookie', [`token=${userOneToken}`])
-//     .send()
-//     .expect(200)
+test("Should get data of specific Marketplace", async () => {
+    const response = await request(app)
+    .get("/marketplaces/me/" + marketplaceOneId.toString())
+    .set('Cookie', [`token=${userOneToken}`])
+    .send()
+    .expect(200)
 
-//     // Check if response correct
-//     expect(response.body).toMatchObject({
-//         _id: adTwoId.toString(),
-//         title: "Amazing House with 10 exclusive Bathrooms",
-//         description: "This amazing House is a bargin. Where you ever to far away from a bathroom that you where not able to make it. Well in this Apartment with 10 Bathrooms, you always will be near one. You'll never ever be late again. You actually do not have a option to be far away, because this apartment only has bathrooms... enjoy this one in a lifetime oppurtunity",
-//         rent: 730,
-//     })
-// })
+    // Check if response correct
+    expect(response.body).toMatchObject({
+        _id: marketplaceOneId.toString(),
+        userId: userOneId.toString(),
+        marketplace: "immowelt",
+        username: "wido@gmx.com",
+    })
+})
 
 
 
