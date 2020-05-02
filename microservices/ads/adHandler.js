@@ -34,6 +34,27 @@ adHandlerResponder.on('deleteAds',async (req,cb) => {
     }
 })
 
+adHandlerResponder.on('updateAd', async (req,cb) => {
+    try {
+        const updates = Object.keys(req.body)
+        const notAllowedUpdates = ['userId', 'date', '_id']
+        const InvalidOperation = updates.every((update) => notAllowedUpdates.includes(update))
+
+        if(InvalidOperation){
+            cb("Invalid Updates", null)
+        } else {
+            // updates.forEach((update) => req.user[update] = req.body[update])
+            await Ads.updateOne({_id: req.adId}, req.body)
+            cb(null, req.user)
+
+        }
+
+    } catch (error) {
+        console.log("Error is thrown in delete", error);
+        cb("There was an Error", null)
+    }
+})
+
 
 
 adHandlerResponder.on('saveMarketLogin', async (req, cb) => {

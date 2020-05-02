@@ -111,15 +111,18 @@ router.get('/ads/me/:id', auth, async (req, responds) => {
             responds.status(200).send(ad)
         }
     });
-
 })
 
-
-router.post('/adPictures', upload.single('pictures'), async (req, res) => {
-    res.send()
-}, (error, req, res, next) => {
-    res.status(400).send({ error: error.message })
+router.patch('/ads/me/:id', auth, async (req, responds) => {
+    adHandlerRequestor.send({type: 'updateAd', user: req.user, adId: req.params.id, body: req.body}, (err, ad) => {
+        if(err){
+            responds.status(400).send()
+        } else{
+            responds.status(200).send(ad)
+        }
+    });
 })
+
 
 const adHandlerRequestor = new cote.Requester({
     name: 'ad Handler requestor',

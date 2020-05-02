@@ -82,16 +82,14 @@ test("Should Delete ALL Ads of a User", async () => {
 
 test("Should Patch a Ad", async () => {
     const response = await request(app)
-        .patch('/ads/me/' + adOneId.toString)
+        .patch('/ads/me/' + adOneId.toString())
         .set('Cookie', [`token=${userOneToken}`])
         .send({
             title: "Biggest and most expensive house in the World for Free",
-            phoneNumber: "000000000000",
         })
         .expect(200)
     
-    // See if Firstname was updated
-    const ad = await Ad.findById(userOneId.toString())
-    expect(user.title).toBe("Biggest and most expensive house in the World for Free")
-    expect(user.phoneNumber).toBe("000000000000")
+    // See if Ad was updated
+    const ad = await Ad.findById(adOneId.toString())
+    expect(ad.title).toBe("Biggest and most expensive house in the World for Free")
 })
