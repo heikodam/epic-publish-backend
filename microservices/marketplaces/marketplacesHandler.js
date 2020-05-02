@@ -30,6 +30,22 @@ marketplaceResponder.on('createMarketplace', async (req, cb) => {
     }
 });
 
+marketplaceResponder.on('getMarketplaces', async (req, cb) => {
+
+    try {
+        const marketplaces = await Marketplace.find({userId: req.user._id.toString()})
+
+        if(!marketplaces){
+            cb("Bad Request", null)
+        } else {
+            cb(null, marketplaces)
+        }
+
+    } catch (error) {
+        console.log(error)
+        cb("You have no marketplaces", null)
+    }
+});
 
 // marketplaceResponder.on('deleteAd',async (req,cb) => {
 //     try{
@@ -74,25 +90,6 @@ marketplaceResponder.on('createMarketplace', async (req, cb) => {
 
 
 
-
-
-
-// marketplaceResponder.on('getAds', async (req, cb) => {
-
-//     try {
-//         const ads = await Ads.find({userId: req.user._id.toString()})
-
-//         if(!ads){
-//             cb("Bad Request", null)
-//         } else {
-//             cb(null, ads)
-//         }
-
-//     } catch (error) {
-//         console.log(error)
-//         cb("You have no ads", null)
-//     }
-// });
 
 // marketplaceResponder.on('getAd', async (req, cb) => {
 
