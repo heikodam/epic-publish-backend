@@ -14,10 +14,6 @@ const identityResponder = new cote.Responder({
 });
 
 
-
-
-
-
 identityResponder.on('createUser', async (req, cb) => {
     try {
         const user = new User(req.user)

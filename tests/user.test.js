@@ -6,7 +6,7 @@ const {userOneId, userOne, setupDB, clearDB} = require('./fixtures/db');
 // beforeAll(clearDB)
 beforeEach(setupDB);
 
-test('users', async () => {
+test('Should Create a User', async () => {
 
     // Creat the user and get the response
     const response = await request(app)
@@ -68,14 +68,28 @@ test('Should login existing user', async () => {
         email: user.email,
     })
 
-    // Check if token was send a lon
+    // Check if token was send along
     expect(response.body.token).toBeTruthy()
 })
 
 
-// test('Should not login user with wrong Password', async () => {
-//     await request(app).post('/login').send({
-//         email: userOne.email,
-//         password: 'thisisnotmypass'
-//     }).expect(400)
-// })
+test('Should not login user with wrong Password', async () => {
+    await request(app).post('/users/login').send({
+        email: userOne.email,
+        password: 'thisisnotmypass'
+    }).expect(400)
+})
+
+test('Should log user out', async () => {
+    const response = await request(app).post('users/logout').send()
+
+    // No cookies allowed
+    expect(response.cookie).toBeFalsy()
+
+    // Check if token is invalid
+    // await request(app)
+    // .get('/ads')
+    // .set('Cookie', [`token=${userOne.token}`])
+    // .send()
+    // .expect(401)
+})
