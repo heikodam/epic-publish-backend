@@ -50,7 +50,7 @@ identityResponder.on('login', async (req, cb) => {
     // Generate the User Token if entered Data is correct
     const token = await user.generateAuthToken()
 
-    cb(null, {user, token})
+    cb(null, {user: {_id: user._id, firstname: user.firstname, surname: user.surname, email: user.email, date: user.date}, token})
 });
 
 

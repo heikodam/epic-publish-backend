@@ -61,12 +61,11 @@ test('Should login existing user', async () => {
     const user = await User.findById(userOneId)
 
     // Check if response data is correct
-    expect(response).toMatchObject({
-        _id: user._id,
+    expect(response.body.user).toMatchObject({
+        _id: userOneId.toString(),
         firstname: user.firstname,
         surname: user.surname,
         email: user.email,
-        date: user.date
     })
 
     // Check if token was send a lon

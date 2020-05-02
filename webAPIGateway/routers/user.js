@@ -21,7 +21,7 @@ router.post('/users', async (req, res) => {
     
 })
 
-router.post('/login', async (req, res) => {
+router.post('/users/login', async (req, res) => {
     identityRequestor.send({type: 'login', user: req.body}, (error, user) => {
         if(error){
             res.status(400).send(error);
