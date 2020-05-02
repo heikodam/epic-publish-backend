@@ -81,16 +81,16 @@ test("Should get data of specific Marketplace", async () => {
 
 
 
-// test("Should Patch a Ad", async () => {
-//     const response = await request(app)
-//         .patch('/ads/me/' + adOneId.toString())
-//         .set('Cookie', [`token=${userOneToken}`])
-//         .send({
-//             title: "Biggest and most expensive house in the World for Free",
-//         })
-//         .expect(200)
+test("Should Patch a Marketplace", async () => {
+    await request(app)
+        .patch('/marketplace/me/' + marketplaceOneId.toString())
+        .set('Cookie', [`token=${userOneToken}`])
+        .send({
+            username: "odiw@gmail.com",
+        })
+        .expect(200)
     
-//     // See if Ad was updated
-//     const ad = await Ad.findById(adOneId.toString())
-//     expect(ad.title).toBe("Biggest and most expensive house in the World for Free")
-// })
+    // See if Ad was updated
+    const marketplace = await Ad.findById(adOneId.toString())
+    expect(marketplace.username).toBe("odiw@gmail.com")
+})
