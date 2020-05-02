@@ -13,14 +13,15 @@ const router = new express.Router()
 
 
 
-router.get('/ads', auth, async (req, responds) => {
-    try {
-        Ads.find({userId: req.user._id}).then((ads) => {
-            responds.status(200).send(ads);
-        })
-    } catch {
-        responds.status(404).send();
-    }
+router.get('/ads/me', auth, async (req, responds) => {
+
+    adHandlerRequestor.send({type: 'getAds', user: req.user}, (err, ads) => {
+        if(err){
+            responds.status(404).send("You don't have any ads yet")
+        } else{
+            responds.send(ads)
+        }
+    });
 
 })
 

@@ -45,20 +45,18 @@ adHandlerResponder.on('saveMarketLogin', async (req, cb) => {
 });
 
 
-adHandlerResponder.on('viewAds', async (req, cb) => {
+adHandlerResponder.on('getAds', async (req, cb) => {
 
     try {
-        Ads.find({}).then((ads) => {
-            cb(null, "ads")
-        })
-    } catch {
+
+        const ads = await Ads.find({userId: req.user._id})
+
+        cb(null, ads)
+
+    } catch (error) {
+        console.log(error)
         cb("You have no ads", null)
     }
-    
-
-
-    
-
 });
 
 adHandlerResponder.on('saveAd', async (req, cb) => {
