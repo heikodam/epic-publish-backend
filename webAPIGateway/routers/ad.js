@@ -48,28 +48,25 @@ let streamUpload = (buffer) => {
   
 
 
-router.post('/create-ad', auth, upload.array('photos', 12), async (req, responds) => {
+router.post('/ads', auth, upload.array('photos', 12), async (req, responds) => {
     const formValues = JSON.parse(req.body.formValues)
 
+    // Save Imgs to cloudary
     var savedImgs = []
     let imgRes = {}
 
-    for(var x = 0; x < req.files.length; x++){
-        imgRes = await streamUpload(req.files[x].buffer);
-        savedImgs.push(imgRes)
+    if(req.files){
+        for(var x = 0; x < req.files.length; x++){
+            imgRes = await streamUpload(req.files[x].buffer);
+            savedImgs.push(imgRes)
+        }    
     }
-
     
-    // var imgs = []
-    // if(req.file) {
-    //     imgs = [req.file.buffer]
-    // }
-    console.log("Saved Imgs: ", savedImgs)
     adHandlerRequestor.send({type: 'saveAd', formValues: formValues, imgs: savedImgs, userId: req.user._id}, (err, res) => {
         if(err){
             responds.status(400).send()
         } else {            
-            responds.status(201).send("Successfully saved")
+            responds.status(201).send()
         }
     });
 })

@@ -50,7 +50,6 @@ adHandlerResponder.on('getAds', async (req, cb) => {
     try {
 
         const ads = await Ads.find({userId: req.user._id.toString()})
-
         cb(null, ads)
 
     } catch (error) {

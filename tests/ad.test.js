@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../webAPIGateway/app');
 const Ad = require('../microservices/ads/adModel');
-const {userOneId, userOne, userOneToken, userTwo, userTwoToken, adOneId, adThree, setupDB, clearDB} = require('./fixtures/db');
+const {userOneId, userOne, userOneToken, userTwo, userTwoToken, adOneId, adThree, adThreeId, setupDB, clearDB} = require('./fixtures/db');
 
 beforeEach(setupDB);
 
@@ -27,26 +27,30 @@ test("Should get all ads for UserOne", async () => {
 
 
 test("Should create ad for UserTwo", async () => {
+    const adDataToSave = {"formValues": JSON.stringify(adThree)}
+    // adDataToSave.append("formValues", JSON.stringify(adThree))
+
+    
     await request(app)
     .post('/ads')
     .set('Cookie', [`token=${userTwoToken}`])
-    .send(adThree)
+    .send(adDataToSave)
     .expect(201)
 
     // Check if ad was added
     const ad = await Ad.findById(adThreeId.toString())
-    expect(ad).toHaveLength(1)
+    expect(ad).toBeTruthy()
 });
 
-// test("Should delete Ad", async () => {
-//     await request(app)
-//     .delete('/ad/' + adOneId)
-//     .set('Cookie', [`token=${userOne.token}`])
-//     .send()
-//     .expect(200)
+test("Should delete Ad", async () => {
+    await request(app)
+    .delete('/ads/me' + adOneId.toString())
+    .set('Cookie', [`token=${userOneToken}`])
+    .send()
+    .expect(200)
 
-//     // Check if ad was deleted
-//     const ad = await Ad.findById(adOneId);
-//     expect(ad).toHaveLength(0)
+    // Check if ad was deleted
+    const ad = await Ad.findById(adOneId);
+    expect(ad).toBeFalsy()
 
-// })
+})
