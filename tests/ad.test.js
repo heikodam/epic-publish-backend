@@ -67,3 +67,15 @@ test("Should get data of specific ad", async () => {
         rent: 730,
     })
 })
+
+test("Delete ALL Ads of a User", async () => {
+    await request(app)
+    .delete('/ads/me')
+    .set('Cookie', [`token=${userOneToken}`])
+    .send()
+    .expect(200)
+
+    // Check if ads were deleted
+    const ad = await Ad.find({userId: userOneId});
+    expect(ad).toBeFalsy()
+})
