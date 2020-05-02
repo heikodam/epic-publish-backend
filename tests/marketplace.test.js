@@ -51,6 +51,18 @@ test("Should delete specific Marketplace", async () => {
 
 })
 
+test("Should Delete ALL Marketplaces of a User", async () => {
+    await request(app)
+    .delete('/marketplaces/me')
+    .set('Cookie', [`token=${userOneToken}`])
+    .send()
+    .expect(200)
+
+    // Check if ads were deleted
+    const marketplace = await Marketplace.find({userId: userOneId});
+    expect(ad).toHaveLength(0)
+})
+
 // test("Should get data of specific ad", async () => {
 //     const response = await request(app)
 //     .get("/ads/me/" + adTwoId.toString())
@@ -67,17 +79,7 @@ test("Should delete specific Marketplace", async () => {
 //     })
 // })
 
-// test("Should Delete ALL Ads of a User", async () => {
-//     await request(app)
-//     .delete('/ads/me')
-//     .set('Cookie', [`token=${userOneToken}`])
-//     .send()
-//     .expect(200)
 
-//     // Check if ads were deleted
-//     const ad = await Ad.find({userId: userOneId});
-//     expect(ad).toHaveLength(0)
-// })
 
 // test("Should Patch a Ad", async () => {
 //     const response = await request(app)
