@@ -60,7 +60,7 @@ test("Should Delete ALL Marketplaces of a User", async () => {
 
     // Check if ads were deleted
     const marketplace = await Marketplace.find({userId: userOneId});
-    expect(ad).toHaveLength(0)
+    expect(marketplace).toHaveLength(0)
 })
 
 // test("Should get data of specific ad", async () => {

@@ -40,7 +40,15 @@ router.delete('/marketplaces/me/:id', auth, async (req, responds) => {
     })
 })
 
-
+router.delete('/marketplaces/me', auth, async (req, responds) => {
+    marketplaceRequestor.send({type: 'deleteMarketplaces', userId: req.user._id}, (err, res) => {
+        if(err){
+            responds.status(400).send()
+        } else {
+            responds.status(200).send()
+        }
+    })
+})
 
 // router.post('/marketplaces', async (req, responds) => {
     
@@ -55,15 +63,7 @@ router.delete('/marketplaces/me/:id', auth, async (req, responds) => {
 
 
 
-// router.delete('/marketplaces/me', auth, async (req, responds) => {
-//     marketplaceRequestor.send({type: 'deleteAds', userId: req.user._id}, (err, res) => {
-//         if(err){
-//             responds.status(400).send()
-//         } else {
-//             responds.status(200).send()
-//         }
-//     })
-// })
+
 
 
 
