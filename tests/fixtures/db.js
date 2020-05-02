@@ -45,7 +45,7 @@ const adOne = {
     date: new Date()
 }
 
-// Ad for User Two
+// Second and for UserOne
 const adTwoId = new mongoose.Types.ObjectId()
 const adTwo = {
     _id: adTwoId,
