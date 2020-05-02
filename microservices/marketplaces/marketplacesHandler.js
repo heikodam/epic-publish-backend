@@ -47,15 +47,15 @@ marketplaceResponder.on('getMarketplaces', async (req, cb) => {
     }
 });
 
-// marketplaceResponder.on('deleteAd',async (req,cb) => {
-//     try{
-//         await Ads.findOneAndDelete({_id: req.adId, userId: req.userId})
-//         cb(null, "Ad deleted")
+marketplaceResponder.on('deleteMarketplace',async (req,cb) => {
+    try{
+        await Marketplace.findOneAndDelete({_id: req.marketplaceId, userId: req.userId})
+        cb(null, "Marketplace deleted")
 
-//     } catch (err) {
-//         cb(err, null)
-//     }
-// })
+    } catch (err) {
+        cb(err, null)
+    }
+})
 
 // marketplaceResponder.on('deleteAds',async (req,cb) => {
 //     try{
