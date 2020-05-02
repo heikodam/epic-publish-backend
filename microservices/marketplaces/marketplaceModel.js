@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const marketLoginSchema = new mongoose.Schema({
-    userID: {
+const marketplaceSchema = new mongoose.Schema({
+    userId: {
         type: String,
         required: true,
         trim: true
@@ -19,14 +19,10 @@ const marketLoginSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-    },
-    date: {
-        type: Date,
-        require: true
-    }
+        }
 });
 
 
-const MarketLogin = mongoose.model('marketLogin', marketLoginSchema)
+const Marketplace = mongoose.model('marketplaces', marketplaceSchema)
 
-module.exports = MarketLogin
+module.exports = Marketplace

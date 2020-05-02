@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const User = require("../../microservices/identityHandler/userModel");
 const Ad = require("../../microservices/ads/adModel");
+const Marketplace = require("../../microservices/marketplaces/marketplaceModel");
 
 const userOneId = new mongoose.Types.ObjectId()
 const userOneToken = jwt.sign({ _id: userOneId.toString() }, process.env.JWT_SECRET, {expiresIn: '12h'})
@@ -84,14 +85,35 @@ const adThree = {
     userId: userTwoId
 }
 
+const marketplaceOneId = new mongoose.Types.ObjectId()
+const marketplaceOne = {
+    _id: marketplaceOneId,
+    userId: userOneId.toString(),
+    marketplace: 'immowelt',
+    username: 'wido@gmx.com',
+    password: '1234567',
+    date: new Date(),
+}
+
+const marketplaceTwoId = new mongoose.Types.ObjectId()
+const marketplaceTwo = {
+    _id: marketplaceTwoId,
+    marketplace: 'ebay-kleinanzeige',
+    username: 'wido@gmx.com',
+    password: '1234567',
+    date: new Date(),
+}
+
 
 const setupDB = async () => {
     await User.deleteMany()
     await Ad.deleteMany()
+    await Marketplace.deleteMany()
     await new User(userOne).save()
     await new User(userTwo).save()
     await new Ad(adOne).save()
     await new Ad(adTwo).save()
+    await new Marketplace(marketplaceOne).save()
 }
 
 const clearDB = async () => {
@@ -112,6 +134,10 @@ module.exports = {
     adTwo,
     adThreeId,
     adThree,
+    marketplaceOneId,
+    marketplaceOne,
+    marketplaceTwoId,
+    marketplaceTwo,
     setupDB,
     clearDB
 }

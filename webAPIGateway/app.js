@@ -6,6 +6,7 @@ const cors = require("cors");
 
 const userRouter = require('./routers/user');
 const adRouter = require('./routers/ad');
+const marketplaceRouter = require('./routers/marketplace');
 
 
 app.use(bodyParser.json());
@@ -19,6 +20,7 @@ app.use(function(req, res, next) {
 
 app.use(userRouter);
 app.use(adRouter);
+app.use(marketplaceRouter);
 
 app.get('/', (req, res) => {
     res.send("Main Endpoint")

@@ -32,9 +32,11 @@
     "webapi-dev": "env-cmd -f ./config/test.env nodemon webAPIGateway/index.js",
     "identity-dev": "env-cmd -f ./config/test.env nodemon microservices/identityHandler/identityHandler.js ",
     "ads-dev": "env-cmd -f ./config/test.env nodemon microservices/ads/adHandler.js",
+    "marketplaces-dev": "env-cmd -f ./config/test.env nodemon microservices/marketplaces/marketplacesHandler.js",
     "webapi": "env-cmd -f ./config/dev.env nodemon webAPIGateway/index.js",
     "identity": "env-cmd -f ./config/dev.env nodemon microservices/identityHandler/identityHandler.js ",
-    "ads": "env-cmd -f ./config/dev.env nodemon microservices/ads/adHandler.js"
+    "ads": "env-cmd -f ./config/dev.env nodemon microservices/ads/adHandler.js",
+    "marketplaces": "env-cmd -f ./config/dev.env nodemon microservices/marketplaces/marketplacesHandler.js"
   },
   "jest": {
     "testEnvironment": "node"
