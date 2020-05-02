@@ -77,5 +77,5 @@ test("Delete ALL Ads of a User", async () => {
 
     // Check if ads were deleted
     const ad = await Ad.find({userId: userOneId});
-    expect(ad).toBeFalsy()
+    expect(ad).toHaveLength(0)
 })

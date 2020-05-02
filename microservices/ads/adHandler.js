@@ -24,6 +24,16 @@ adHandlerResponder.on('deleteAd',async (req,cb) => {
     }
 })
 
+adHandlerResponder.on('deleteAds',async (req,cb) => {
+    try{
+        await Ads.deleteMany({userId: req.userId})
+        cb(null, "Ad deleted")
+
+    } catch (err) {
+        cb(err, null)
+    }
+})
+
 
 
 adHandlerResponder.on('saveMarketLogin', async (req, cb) => {

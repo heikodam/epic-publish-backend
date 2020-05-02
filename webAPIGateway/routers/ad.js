@@ -83,7 +83,15 @@ router.post('/market-user-data', auth, async (req, responds) => {
     });
 });
 
-
+router.delete('/ads/me', auth, async (req, responds) => {
+    adHandlerRequestor.send({type: 'deleteAds', userId: req.user._id}, (err, res) => {
+        if(err){
+            responds.status(400).send()
+        } else {
+            responds.status(200).send()
+        }
+    })
+})
 
 router.delete('/ads/me/:id', auth, async (req, responds) => {
     adHandlerRequestor.send({type: 'deleteAd', adId: req.params.id, userId: req.user._id}, (err, res) => {
@@ -96,7 +104,6 @@ router.delete('/ads/me/:id', auth, async (req, responds) => {
 })
 
 router.get('/ads/me/:id', auth, async (req, responds) => {
-
     adHandlerRequestor.send({type: 'getAd', user: req.user, adId: req.params.id}, (err, ad) => {
         if(err){
             responds.status(404).send()
