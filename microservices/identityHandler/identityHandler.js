@@ -24,7 +24,7 @@ identityResponder.on('createUser', async (req, cb) => {
         user.date = new Date()
         await user.save()
         const token = await user.generateAuthToken()
-        cb(null, {user: {_id: user._id, name: user.name, email: user.email}, token})
+        cb(null, {user: {_id: user._id, firstname: user.firstname, surname: user.surname, email: user.email}, token})
     } catch (error) {
         cb("Unable to Sign You up", null)
     }

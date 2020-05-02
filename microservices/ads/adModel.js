@@ -23,7 +23,7 @@ const adSchema = new mongoose.Schema({
         required: true
     },
     marketplaces: {
-        type: [String]
+        type: Array
     },
     imgLinks: {
         type: Array

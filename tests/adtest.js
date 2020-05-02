@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../webAPIGateway/app');
 const Ad = require('../microservices/ads/adModel');
-const {userOneId, userOne, userTwo, adOneId, adThree, setupDB, clearDB} = require('./fixtures/addb');
+const {userOneId, userOne, userTwo, adOneId, adThree, setupDB, clearDB} = require('./fixtures/db');
 
 beforeEach(setupDB);
 

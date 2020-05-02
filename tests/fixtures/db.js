@@ -6,20 +6,22 @@ const Ad = require("../../microservices/ads/adModel");
 const userOneId = new mongoose.Types.ObjectId()
 const userOne = {
     _id: userOneId,
-    name: 'Gunther',
+    firstname: 'Gunther',
+    surname: 'Horn',
     email: 'gunther@z.com',
     password: '1234567',
-    token: jwt.sign({ _id: userOneId }, process.env.JWT_SECRET)
+    date: new Date(),
 }
 
 
 const userTwoId = new mongoose.Types.ObjectId()
 const userTwo = {
     _id: userTwoId,
-    name: 'Dagobert',
+    firstname: 'Dagobert',
+    surname: 'Kuhn',
     email: 'dagobert@b.com',
     password: '1234567',
-    token: jwt.sign({ _id: userTwoId }, process.env.JWT_SECRET)
+    date: new Date(),
 }
 
 // Ad for User One
@@ -36,7 +38,9 @@ const adOne = {
     title: "Amazing Penthouse in the Middle of nowhere",
     description: "You will never get lost in this area, because you'll never know where you are anyways. If you rent it right now you'll get some FREE Toilet Paper",
     name: "Siebert",
-    userId: userOneId
+    marketplaces: ["ebaykleinanzeige", "immowelt"],
+    userId: userOneId,
+    date: new Date()
 }
 
 // Ad for User Two
@@ -54,6 +58,8 @@ const adTwo = {
     description: "This amazing House is a bargin. Where you ever to far away from a bathroom that you where not able to make it. Well in this Apartment with 10 Bathrooms, you always will be near one. You'll never ever be late again. You actually do not have a option to be far away, because this apartment only has bathrooms... enjoy this one in a lifetime oppurtunity",
     name: "Siebert",
     phoneNumber: "017628714838",
+    marketplaces: ["ebaykleinanzeige"],
+    date: new Date(),
     userId: userOneId
 }
 
@@ -71,6 +77,8 @@ const adThree = {
     description: "If you rent this place you do not get only 1 Container, you don't get 2 Containers or 3 Contianers but a total of 6 Containers all yours if you decide to rent this place. Another cool side benefit is that these containers are right next to the Highe way so you'll always have perfect access to quick transportation.",
     name: "Siebert",
     phoneNumber: "017628714838",
+    imgLinks: ["https://res.cloudinary.com/heikodam/image/upload/v1588335255/sample.jpg"],
+    date: new Date(),
     userId: userTwoId
 }
 
