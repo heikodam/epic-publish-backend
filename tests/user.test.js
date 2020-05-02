@@ -108,3 +108,28 @@ test('Should log user out', async () => {
     .send()
     .expect(401)
 })
+
+
+test('Should update user Profile', async () => {
+    const response = await request(app)
+        .patch('/users/me')
+        .set('Cookie', [`token=${userOneToken}`])
+        .send({
+            firstname: "Alfred"
+        })
+        .expect(200)
+    
+    // See if Firstname was updated
+    const user = await User.findById(userOneId.toString())
+    expect(user.firstname).toBe("Alfred")
+})
+
+test('Should fail to update Profile with wrong data', async () => {
+    await request(app)
+        .patch('/users/me')
+        .set('Cookie', [`token=${userOneToken}`])
+        .send({
+            name: "Alfred"
+        })
+        .expect(400)
+})
