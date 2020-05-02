@@ -38,18 +38,18 @@ test("Should get all the Marketplaces for UserOne", async () => {
     })
 });
 
-// test("Should delete Ad", async () => {
-//     await request(app)
-//     .delete('/ads/me/' + adOneId.toString())
-//     .set('Cookie', [`token=${userOneToken}`])
-//     .send()
-//     .expect(200)
+test("Should delete specific Marketplace", async () => {
+    await request(app)
+    .delete('/marketplaces/me/' + marketplaceOneId.toString())
+    .set('Cookie', [`token=${userOneToken}`])
+    .send()
+    .expect(200)
 
-//     // Check if ad was deleted
-//     const ad = await Ad.findById(adOneId);
-//     expect(ad).toBeFalsy()
+    // Check if ad was deleted
+    const marketplace = await Marketplace.findById(marketplaceOneId);
+    expect(marketplace).toBeFalsy()
 
-// })
+})
 
 // test("Should get data of specific ad", async () => {
 //     const response = await request(app)
