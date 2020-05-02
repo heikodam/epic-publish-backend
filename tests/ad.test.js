@@ -64,6 +64,6 @@ test("Should get data of specific ad", async () => {
         _id: adTwoId.toString(),
         title: "Amazing House with 10 exclusive Bathrooms",
         description: "This amazing House is a bargin. Where you ever to far away from a bathroom that you where not able to make it. Well in this Apartment with 10 Bathrooms, you always will be near one. You'll never ever be late again. You actually do not have a option to be far away, because this apartment only has bathrooms... enjoy this one in a lifetime oppurtunity",
-        rent: "730",
+        rent: 730,
     })
 })

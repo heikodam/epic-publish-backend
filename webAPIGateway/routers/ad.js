@@ -88,13 +88,24 @@ router.post('/market-user-data', auth, async (req, responds) => {
 router.delete('/ads/me/:id', auth, async (req, responds) => {
     adHandlerRequestor.send({type: 'deleteAd', adId: req.params.id, userId: req.user._id}, (err, res) => {
         if(err){
-            responds.status(400).send("Something went wrong")
+            responds.status(400).send()
         } else {
-            responds.status(200).send("Ad Deleted")
+            responds.status(200).send()
         }
     })
 })
 
+router.get('/ads/me/:id', auth, async (req, responds) => {
+
+    adHandlerRequestor.send({type: 'getAd', user: req.user, adId: req.params.id}, (err, ad) => {
+        if(err){
+            responds.status(404).send()
+        } else{
+            responds.status(200).send(ad)
+        }
+    });
+
+})
 
 
 router.post('/adPictures', upload.single('pictures'), async (req, res) => {
