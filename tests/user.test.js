@@ -37,29 +37,41 @@ test('users', async () => {
     expect(response.body.token).toBeTruthy()
 });
 
-// test('Should Fail to Create user with existing email', async () => {
-//     const response = await request(app)
-//     .post('/createUser')
-//     .send({
-//         name: userOne.name,
-//         email: userOne.email,
-//         password: "lekker"
-//     }).expect(400)
-// })
+test('Should Fail to Create user with existing email', async () => {
+    const response = await request(app)
+    .post('/users')
+    .send({
+        firstname: userOne.firstname,
+        surname: userOne.surname,
+        email: userOne.email,
+        password: "lekker"
+    }).expect(400)
+})
 
 
-// test('Should login existing user', async () => {
+test('Should login existing user', async () => {
 
-//     // Check if able to login
-//     const response = await request(app).post('/login').send({
-//         email: userOne.email,
-//         password: userOne.password
-//     }).expect(200)
+    // Check if able to login
+    const response = await request(app).post('/users/login').send({
+        email: userOne.email,
+        password: userOne.password
+    }).expect(200)
 
-//     // Check if token response is correct
-//     const user = await User.findById(userOneId)
-//     expect(response.body.token).toBe(user.token)
-// })
+    // Check if token was send a long
+    const user = await User.findById(userOneId)
+
+    // Check if response data is correct
+    expect(response).toMatchObject({
+        _id: user._id,
+        firstname: user.firstname,
+        surname: user.surname,
+        email: user.email,
+        date: user.date
+    })
+
+    // Check if token was send a lon
+    expect(response.body.token).toBeTruthy()
+})
 
 
 // test('Should not login user with wrong Password', async () => {

@@ -8,7 +8,7 @@ const router = new express.Router()
 
 
 
-router.post('/createUser', async (req, res) => {
+router.post('/users', async (req, res) => {
 
     identityRequestor.send({type: 'createUser', user: req.body}, (error, user) => {
         if(error){
