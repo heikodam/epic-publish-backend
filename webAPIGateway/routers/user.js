@@ -44,9 +44,34 @@ router.post('/users/logout', async (req, res) => {
 router.delete('/users/me', auth, (req, res) => {
     identityRequestor.send({type: 'delete', token: req.cookies.token, user: req.user}, (error, user) => {
         if(error){
-            res.status(400).send()
+            res.status(404).send()
         } else {
             res.status(200).send()
+        }
+    })
+})
+
+router.get('/users/me', auth, (req, res) => {
+
+    // Could also just send the body from here with
+    // res.status(200).send(req.user)
+    // But that would be inconsistend with all other requests so I request it from the Micorserver
+    identityRequestor.send({type: 'getProfile', token: req.cookies.token, user: req.user}, (error, user) => {
+        if(error){
+            res.status(404).send()
+        } else {
+            res.status(200).send(user)
+        }
+    })
+})
+
+
+router.patch('/users/me', auth, (req, res) => {
+    identityRequestor.send({type: 'updateProfile', token: req.cookies.token, user: req.user, body: req.body}, (error, user) => {
+        if(error){
+            res.status(400).send()
+        } else {
+            res.status(200).send(user)
         }
     })
 })

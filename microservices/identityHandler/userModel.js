@@ -41,10 +41,7 @@ const userSchema = new mongoose.Schema({
     date: {
         type: Date,
         required: true
-    },
-    token:  {
-            type: String,
-        }
+    }
 });
 
 // FUNCTION NOT WORKING

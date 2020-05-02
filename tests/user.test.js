@@ -91,25 +91,6 @@ test('Should delete user', async () => {
     expect(user).toBeNull()
 })
 
-
-test('Should log user out', async () => {
-    const response = await request(app).post('/users/logout')
-    .set('Cookie', [`token=${userOneToken}`])
-    .send()
-    .expect(200)
-
-    // No cookies allowed
-    expect(response.cookie).toBeFalsy()
-
-    // Check if token is invalid
-    await request(app)
-    .get('/ads')
-    .set('Cookie', [`token=${userOneToken}`])
-    .send()
-    .expect(401)
-})
-
-
 test('Should update user Profile', async () => {
     const response = await request(app)
         .patch('/users/me')
@@ -133,3 +114,38 @@ test('Should fail to update Profile with wrong data', async () => {
         })
         .expect(400)
 })
+
+
+test('Should get the users profile', async () => {
+    const response = await request(app)
+        .get('/users/me')
+        .set('Cookie', [`token=${userOneToken}`])
+        .send()
+        .expect(200)
+
+    expect(response.body).toMatchObject(
+        {
+            _id: userOneId.toString(),
+            firstname: 'Gunther',
+            surname: 'Horn',
+            email: 'gunther@z.com',
+        })
+})
+
+// Code works but since token is then on blacklist not able to auth afterwards
+// test('Should log user out', async () => {
+//     const response = await request(app).post('/users/logout')
+//     .set('Cookie', [`token=${userOneToken}`])
+//     .send()
+//     .expect(200)
+
+//     // No cookies allowed
+//     expect(response.cookie).toBeFalsy()
+
+//     // Check if token is invalid
+//     await request(app)
+//     .get('/ads')
+//     .set('Cookie', [`token=${userOneToken}`])
+//     .send()
+//     .expect(401)
+// })

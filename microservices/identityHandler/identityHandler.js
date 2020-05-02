@@ -81,7 +81,7 @@ identityResponder.on('logout', async (req, cb) => {
         const decoded = jwt.verify(req.token, process.env.JWT_SECRET);
         updateBlacklist(req.token)
         // blacklist.push(req.token)
-        console.log("Blacklist in IdentityHandler: ", blacklist)
+        // console.log("Blacklist in IdentityHandler: ", blacklist)
         await User.findByIdAndUpdate(decoded._id, {token: undefined}, {new: true, runValidators: true});
         cb(null, "Logged out")
         
@@ -95,14 +95,42 @@ identityResponder.on('logout', async (req, cb) => {
 identityResponder.on('delete', async (req, cb) => {
     try {
         const decoded = jwt.verify(req.token, process.env.JWT_SECRET);
-        if(decoded._id !== req.user._id){
-            cb("Unotharised", null)
-        } else {
-            const user = await User.findByIdAndDelete(decoded._id)
+        const user = await User.findByIdAndDelete(decoded._id)
 
-            if(!user){cb("Not Found", null)}
-            else {cb(null, "Deleted")}
+        if(!user){cb("Not Found", null)}
+        else {cb(null, "Deleted")}
+
+    } catch (error) {
+        console.log("Error is thrown in delete", error);
+        cb("There was an Error", null)
+    }
+});
+
+identityResponder.on('updateProfile', async (req, cb) => {
+    try {
+        // console.log("Request Body: ", req.body)
+        const updates = Object.keys(req.body)
+        const allowedUpdates = ['firstname', 'surname', 'email', 'password']
+        const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+
+        if(!isValidOperation){
+            cb("Invalid Updates", null)
+        } else {
+            updates.forEach((update) => req.user[update] = req.body[update])
+            await User.updateOne({_id: req.user._id}, req.user)
+            cb(null, req.user)
+
         }
+
+    } catch (error) {
+        console.log("Error is thrown in delete", error);
+        cb("There was an Error", null)
+    }
+});
+
+identityResponder.on('getProfile', async (req, cb) => {
+    try {
+        cb(null, req.user)
 
     } catch (error) {
         console.log("Error is thrown in delete", error);
