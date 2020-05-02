@@ -6,6 +6,7 @@
   "dependencies": {
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
+    "cloudinary": "^1.21.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "cote": "^1.0.0",
@@ -18,6 +19,7 @@
     "multer": "^1.4.2",
     "puppeteer": "^2.1.1",
     "redis-server": "^1.2.2",
+    "streamifier": "^0.1.1",
     "validator": "^13.0.0"
   },
   "devDependencies": {

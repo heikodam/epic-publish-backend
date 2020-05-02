@@ -1,6 +1,8 @@
 const express = require("express");
 const cote = require("cote");
 const multer = require("multer");
+const cloudinary = require('cloudinary').v2;
+const streamifier = require("streamifier");
 
 require("../../database/mongoose")
 const auth = require("../middelware/auth");
@@ -22,16 +24,47 @@ router.get('/ads', auth, async (req, responds) => {
 
 })
 
-
+// Both needed to upload imgs to cloudinary
 const upload = multer();
+// Function from cloudinary support https://support.cloudinary.com/hc/en-us/community/posts/360007581379-Correct-way-of-uploading-from-buffer-
+let streamUpload = (buffer) => {
+    return new Promise((resolve, reject) => {
+      let stream = cloudinary.uploader.upload_stream(
+        {
+            folder: "adPhotos"
+        },
+        (error, result) => {
+          if (result) {
+            resolve(result);
+          } else {
+            reject(error);
+          }
+        }
+      );
+      streamifier.createReadStream(buffer).pipe(stream);
+    });
+  };
+  
 
-router.post('/create-ad', auth, upload.single('imgUpload'), (req, responds) => {
+
+router.post('/create-ad', auth, upload.array('photos', 12), async (req, responds) => {
     const formValues = JSON.parse(req.body.formValues)
-    var imgs = []
-    if(req.file) {
-        imgs = [req.file.buffer]
+
+    var savedImgs = []
+    let imgRes = {}
+
+    for(var x = 0; x < req.files.length; x++){
+        imgRes = await streamUpload(req.files[x].buffer);
+        savedImgs.push(imgRes)
     }
-    adHandlerRequestor.send({type: 'saveAd', formValues: formValues, imgs: imgs, userId: req.user._id}, (err, res) => {
+
+    
+    // var imgs = []
+    // if(req.file) {
+    //     imgs = [req.file.buffer]
+    // }
+    console.log("Saved Imgs: ", savedImgs)
+    adHandlerRequestor.send({type: 'saveAd', formValues: formValues, imgs: savedImgs, userId: req.user._id}, (err, res) => {
         if(err){
             responds.status(400).send()
         } else {            

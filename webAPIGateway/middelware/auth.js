@@ -21,7 +21,7 @@ const auth = async (req, res, next) => {
         const user = await User.findOne({ _id: decoded._id, 'token': token });
 
         // console.log("Id: ", decoded._id)
-        console.log("Token: ", token)
+        // console.log("Token: ", token)
 
         var blacklist = []
 
@@ -29,10 +29,10 @@ const auth = async (req, res, next) => {
             if(err){
                 res.status(500).send()
             }
-            console.log("resp in auth: ", resp)
+            // console.log("resp in auth: ", resp)
             if(resp[0] === "wrong"){
                 identityRequestor.send({type: 'getBlacklist'}, (err, respond) => {
-                    console.log("respond in auth: ", respond)
+                    // console.log("respond in auth: ", respond)
                     validate(respond)
                 })
             } else {
@@ -44,14 +44,14 @@ const auth = async (req, res, next) => {
     
         })
 
-        console.log("Blacklist in auth: ", blacklist)
+        // console.log("Blacklist in auth: ", blacklist)
         const validate = (blacklist) => {
-            console.log("In Validate")
+            // console.log("In Validate")
             if (!user) {
                 res.status(401).send('Please authenticate.');
             } 
             else if(blacklist.indexOf(token) >= 0){
-                console.log("Token was blacklisted")
+                // console.log("Token was blacklisted")
                 res.status(401).send('Please authenticate.');
             }
             else{

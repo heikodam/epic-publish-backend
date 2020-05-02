@@ -1,0 +1,1 @@
+To Remove the logging from cote go to node_modules\cote\src\components\discovery.js and in default Options change log to false

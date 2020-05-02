@@ -25,9 +25,9 @@ const adSchema = new mongoose.Schema({
     marketplaces: {
         type: [String]
     },
-    imgs: {
-        type: Buffer
-    },
+    imgLinks: {
+        type: Array
+    }
 }, { strict: false });
 
 const ads = mongoose.model('ads', adSchema)

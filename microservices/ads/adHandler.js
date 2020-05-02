@@ -66,7 +66,7 @@ adHandlerResponder.on('saveAd', async (req, cb) => {
     try {
 
         var newAd = {...req.formValues}
-        newAd.imgs = req.imgs[0]
+        newAd.imgs = req.imgs
         newAd.date = new Date()
         newAd.userId = req.userId
 
