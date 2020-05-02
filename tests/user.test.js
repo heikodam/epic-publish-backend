@@ -80,16 +80,27 @@ test('Should not login user with wrong Password', async () => {
     }).expect(400)
 })
 
-test('Should log user out', async () => {
-    const response = await request(app).post('users/logout').send()
+test('Should delete user', async () => {
+    const response = await request(app)
+        .delete('/users/me')
+        .set('Cookie', [`token=${userOne.token}`])
+        .send().expect(200)
 
-    // No cookies allowed
-    expect(response.cookie).toBeFalsy()
-
-    // Check if token is invalid
-    // await request(app)
-    // .get('/ads')
-    // .set('Cookie', [`token=${userOne.token}`])
-    // .send()
-    // .expect(401)
+    // Check if user deleted
+    const user = await User.findById(userOneId.toString())
+    expect(user).toBeNull()
 })
+
+// test('Should log user out', async () => {
+//     const response = await request(app).post('users/logout').send()
+
+//     // No cookies allowed
+//     expect(response.cookie).toBeFalsy()
+
+//     // Check if token is invalid
+//     // await request(app)
+//     // .get('/ads')
+//     // .set('Cookie', [`token=${userOne.token}`])
+//     // .send()
+//     // .expect(401)
+// })

@@ -33,7 +33,7 @@ router.post('/users/login', async (req, res) => {
     })
 });
 
-router.post('/logout', async (req, res) => {
+router.post('/users/logout', async (req, res) => {
     identityRequestor.send({type: 'logout', token: req.cookies.token}, (error, user) => {
         res.clearCookie("token");
         res.send();        
