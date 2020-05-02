@@ -58,7 +58,7 @@ test('Should login existing user', async () => {
     }).expect(200)
 
     // Check if token was send a long
-    const user = await User.findById(userOneId)
+    const user = await User.findById(userOneId.toString())
 
     // Check if response data is correct
     expect(response.body.user).toMatchObject({
