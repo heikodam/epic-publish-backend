@@ -85,7 +85,7 @@ router.post('/market-user-data', auth, async (req, responds) => {
 
 
 
-router.delete('/ad/:id', auth, async (req, responds) => {
+router.delete('/ads/me/:id', auth, async (req, responds) => {
     adHandlerRequestor.send({type: 'deleteAd', adId: req.params.id, userId: req.user._id}, (err, res) => {
         if(err){
             responds.status(400).send("Something went wrong")
