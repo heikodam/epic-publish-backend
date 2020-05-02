@@ -1,6 +1,7 @@
 const express = require("express");
 const cote = require("cote");
 
+const auth = require("../middelware/auth");
 require("../../database/mongoose")
 
 
@@ -39,6 +40,17 @@ router.post('/users/logout', async (req, res) => {
         res.send();        
     })
 });
+
+router.delete('/users/me', auth, (req, res) => {
+    identityRequestor.send({type: 'delete', token: req.cookies.token, user: req.user}, (error, user) => {
+        if(error){
+            res.status(400).send()
+        } else {
+            res.status(200).send()
+        }
+    })
+})
+
 
 router.post('/emailUsed', async (req, res) => {
     identityRequestor.send({type: 'emailUsed', email: req.body.email}, (error, emailUsed) => {

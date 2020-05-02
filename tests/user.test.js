@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../webAPIGateway/app');
 const User = require('../microservices/identityHandler/userModel');
-const {userOneId, userOne, setupDB, clearDB} = require('./fixtures/db');
+const {userOneId, userOne, setupDB, userOneToken} = require('./fixtures/db');
 
 // beforeAll(clearDB)
 beforeEach(setupDB);
@@ -83,7 +83,7 @@ test('Should not login user with wrong Password', async () => {
 test('Should delete user', async () => {
     const response = await request(app)
         .delete('/users/me')
-        .set('Cookie', [`token=${userOne.token}`])
+        .set('Cookie', [`token=${userOneToken}`])
         .send().expect(200)
 
     // Check if user deleted
@@ -91,16 +91,20 @@ test('Should delete user', async () => {
     expect(user).toBeNull()
 })
 
-// test('Should log user out', async () => {
-//     const response = await request(app).post('users/logout').send()
 
-//     // No cookies allowed
-//     expect(response.cookie).toBeFalsy()
+test('Should log user out', async () => {
+    const response = await request(app).post('/users/logout')
+    .set('Cookie', [`token=${userOneToken}`])
+    .send()
+    .expect(200)
 
-//     // Check if token is invalid
-//     // await request(app)
-//     // .get('/ads')
-//     // .set('Cookie', [`token=${userOne.token}`])
-//     // .send()
-//     // .expect(401)
-// })
+    // No cookies allowed
+    expect(response.cookie).toBeFalsy()
+
+    // Check if token is invalid
+    await request(app)
+    .get('/ads')
+    .set('Cookie', [`token=${userOneToken}`])
+    .send()
+    .expect(401)
+})

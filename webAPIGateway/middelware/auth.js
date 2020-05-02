@@ -18,7 +18,9 @@ const auth = async (req, res, next) => {
         // console.log("Blacklist", blacklist)
         const token = req.cookies.token;
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findOne({ _id: decoded._id, 'token': token });
+        const user = await User.findOne({ _id: decoded._id});
+
+
 
         // console.log("Id: ", decoded._id)
         // console.log("Token: ", token)
@@ -48,6 +50,7 @@ const auth = async (req, res, next) => {
         const validate = (blacklist) => {
             // console.log("In Validate")
             if (!user) {
+                // console.log("No User found")
                 res.status(401).send('Please authenticate.');
             } 
             else if(blacklist.indexOf(token) >= 0){

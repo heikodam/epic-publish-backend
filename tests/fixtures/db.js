@@ -4,6 +4,7 @@ const User = require("../../microservices/identityHandler/userModel");
 const Ad = require("../../microservices/ads/adModel");
 
 const userOneId = new mongoose.Types.ObjectId()
+const userOneToken = jwt.sign({ _id: userOneId.toString() }, process.env.JWT_SECRET, {expiresIn: '12h'})
 const userOne = {
     _id: userOneId,
     firstname: 'Gunther',
@@ -15,6 +16,7 @@ const userOne = {
 
 
 const userTwoId = new mongoose.Types.ObjectId()
+const userTwoToken = jwt.sign({ _id: userTwoId.toString() }, process.env.JWT_SECRET, {expiresIn: '12h'})
 const userTwo = {
     _id: userTwoId,
     firstname: 'Dagobert',
@@ -100,8 +102,10 @@ const clearDB = async () => {
 module.exports = {
     userOneId,
     userOne,
+    userOneToken,
     userTwoId,
     userTwo,
+    userTwoToken,
     adOneId,
     adOne,
     adTwoId,
