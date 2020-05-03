@@ -87,7 +87,7 @@ marketplaceResponder.on('getMarketplace', async (req, cb) => {
 marketplaceResponder.on('updateMarketplace', async (req,cb) => {
     try {
         const updates = Object.keys(req.body)
-        const notAllowedUpdates = ['userId', 'date', '_id', 'marketplace']
+        const notAllowedUpdates = ['userId', 'date', '_id', 'marketplace', 'password']
         const InvalidOperation = updates.every((update) => notAllowedUpdates.includes(update))
 
         if(InvalidOperation){

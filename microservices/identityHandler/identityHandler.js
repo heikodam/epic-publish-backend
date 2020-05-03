@@ -123,7 +123,7 @@ identityResponder.on('updateProfile', async (req, cb) => {
         }
 
     } catch (error) {
-        console.log("Error is thrown in delete", error);
+        console.log("Error is thrown in Patch Profile", error);
         cb("There was an Error", null)
     }
 });

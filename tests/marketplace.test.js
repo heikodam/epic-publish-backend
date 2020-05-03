@@ -83,7 +83,7 @@ test("Should get data of specific Marketplace", async () => {
 
 test("Should Patch a Marketplace", async () => {
     await request(app)
-        .patch('/marketplace/me/' + marketplaceOneId.toString())
+        .patch('/marketplaces/me/' + marketplaceOneId.toString())
         .set('Cookie', [`token=${userOneToken}`])
         .send({
             username: "odiw@gmail.com",

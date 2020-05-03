@@ -60,7 +60,7 @@ router.get('/marketplaces/me/:id', auth, async (req, responds) => {
     });
 })
 
-router.patch('/marketplace/me/:id', auth, async (req, responds) => {
+router.patch('/marketplaces/me/:id', auth, async (req, responds) => {
     marketplaceRequestor.send({type: 'updateMarketplace', user: req.user, marketplaceId: req.params.id, body: req.body}, (err, marketplace) => {
         if(err){
             responds.status(400).send()
