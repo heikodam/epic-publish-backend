@@ -91,6 +91,6 @@ test("Should Patch a Marketplace", async () => {
         .expect(200)
     
     // See if Ad was updated
-    const marketplace = await Ad.findById(adOneId.toString())
+    const marketplace = await Marketplace.findById(marketplaceOneId.toString())
     expect(marketplace.username).toBe("odiw@gmail.com")
 })

@@ -84,26 +84,26 @@ marketplaceResponder.on('getMarketplace', async (req, cb) => {
     }
 });
 
-// marketplaceResponder.on('updateAd', async (req,cb) => {
-//     try {
-//         const updates = Object.keys(req.body)
-//         const notAllowedUpdates = ['userId', 'date', '_id']
-//         const InvalidOperation = updates.every((update) => notAllowedUpdates.includes(update))
+marketplaceResponder.on('updateMarketplace', async (req,cb) => {
+    try {
+        const updates = Object.keys(req.body)
+        const notAllowedUpdates = ['userId', 'date', '_id', 'marketplace']
+        const InvalidOperation = updates.every((update) => notAllowedUpdates.includes(update))
 
-//         if(InvalidOperation){
-//             cb("Invalid Updates", null)
-//         } else {
-//             // updates.forEach((update) => req.user[update] = req.body[update])
-//             await Ads.updateOne({_id: req.adId}, req.body)
-//             cb(null, req.user)
+        if(InvalidOperation){
+            cb("Invalid Updates", null)
+        } else {
+            // updates.forEach((update) => req.user[update] = req.body[update])
+            const marketplace = await Marketplace.updateOne({_id: req.marketplaceId}, req.body)
+            cb(null, marketplace)
 
-//         }
+        }
 
-//     } catch (error) {
-//         console.log("Error is thrown in delete", error);
-//         cb("There was an Error", null)
-//     }
-// })
+    } catch (error) {
+        console.log("Error is thrown in delete", error);
+        cb("There was an Error", null)
+    }
+})
 
 
 

@@ -60,6 +60,16 @@ router.get('/marketplaces/me/:id', auth, async (req, responds) => {
     });
 })
 
+router.patch('/marketplace/me/:id', auth, async (req, responds) => {
+    marketplaceRequestor.send({type: 'updateMarketplace', user: req.user, marketplaceId: req.params.id, body: req.body}, (err, marketplace) => {
+        if(err){
+            responds.status(400).send()
+        } else{
+            responds.status(200).send(marketplace)
+        }
+    });
+})
+
 // router.post('/marketplaces', async (req, responds) => {
     
 //     marketplaceRequestor.send({type: 'saveAd', formValues: formValues, imgs: savedImgs, userId: req.user._id}, (err, res) => {
@@ -79,15 +89,7 @@ router.get('/marketplaces/me/:id', auth, async (req, responds) => {
 
 
 
-// router.patch('/marketplaces/me/:id', auth, async (req, responds) => {
-//     marketplaceRequestor.send({type: 'updateAd', user: req.user, adId: req.params.id, body: req.body}, (err, ad) => {
-//         if(err){
-//             responds.status(400).send()
-//         } else{
-//             responds.status(200).send(ad)
-//         }
-//     });
-// })
+
 
 
 const marketplaceRequestor = new cote.Requester({
