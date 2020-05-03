@@ -53,7 +53,7 @@ router.delete('/users/me', auth, (req, res) => {
 
 router.get('/users/me', auth, (req, res) => {
 
-    // Could also just send the body from here with
+    // Am already getting all the userdata from auth through req.user and do not need to make a request to db. Could also just send the body from here with
     // res.status(200).send(req.user)
     // But that would be inconsistend with all other requests so I request it from the Micorserver
     identityRequestor.send({type: 'getProfile', token: req.cookies.token, user: req.user}, (error, user) => {

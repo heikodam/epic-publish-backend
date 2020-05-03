@@ -13,7 +13,7 @@ router.post('/marketplaces', auth, async (req, responds) => {
         if(err){
             responds.status(400).send()
         } else{
-            responds.status(201).send(marketplace)
+            responds.status(201).send()
         }
     });
 });

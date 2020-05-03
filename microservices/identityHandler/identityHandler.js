@@ -130,7 +130,14 @@ identityResponder.on('updateProfile', async (req, cb) => {
 
 identityResponder.on('getProfile', async (req, cb) => {
     try {
-        cb(null, req.user)
+
+        const user = {
+            firstname: req.user.firstname,
+            surname: req.user.surname,
+            email: req.user.email,
+            date: req.user.date
+        }
+        cb(null, user)
 
     } catch (error) {
         console.log("Error is thrown in delete", error);

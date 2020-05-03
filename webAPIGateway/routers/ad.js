@@ -55,12 +55,17 @@ router.post('/ads', auth, upload.array('photos', 12), async (req, responds) => {
     var savedImgs = []
     let imgRes = {}
 
-    if(req.files){
-        for(var x = 0; x < req.files.length; x++){
-            imgRes = await streamUpload(req.files[x].buffer);
-            savedImgs.push(imgRes)
-        }    
+    try {
+        if(req.files){
+            for(var x = 0; x < req.files.length; x++){
+                imgRes = await streamUpload(req.files[x].buffer);
+                savedImgs.push(imgRes)
+            }    
+        }
+    } catch (error){
+        console.log(error)
     }
+    
     
     adHandlerRequestor.send({type: 'saveAd', formValues: formValues, imgs: savedImgs, userId: req.user._id}, (err, res) => {
         if(err){
