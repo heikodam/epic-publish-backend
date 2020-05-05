@@ -54,11 +54,7 @@ const auth = async (req, res, next) => {
         // console.log("Blacklist in auth: ", blacklist)
         const validate = (blacklist) => {
             // console.log("In Validate")
-            if (!user) {
-                // console.log("No User found")
-                res.status(401).send('Please authenticate.');
-            } 
-            else if(blacklist.indexOf(token) >= 0){
+            if(blacklist.indexOf(token) >= 0){
                 // console.log("Token was blacklisted")
                 res.status(401).send('Please authenticate.');
             }

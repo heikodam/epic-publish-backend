@@ -26,7 +26,21 @@ router.get('/ads/me', auth, async (req, responds) => {
 })
 
 // Both needed to upload imgs to cloudinary
-const upload = multer();
+const upload = multer({
+    limits: {
+        fileSize: 5000000 
+    }, 
+    fileFilter(req, file, cb){
+        // console.log("Request in upload", req)
+        console.log("Request in upload")
+        console.log(file.originalname)
+        if(!file.originalname.match(/\.(jpg|jpeg|png)$/)){
+            console.log("Rejects this file")
+            return cb(new Error("Please upload an image"))
+        }
+        cb(undefined, true)
+    }
+});
 // Function from cloudinary support https://support.cloudinary.com/hc/en-us/community/posts/360007581379-Correct-way-of-uploading-from-buffer-
 let streamUpload = (buffer) => {
     return new Promise((resolve, reject) => {
@@ -49,6 +63,10 @@ let streamUpload = (buffer) => {
 
 
 router.post('/ads', auth, upload.array('photos', 12), async (req, responds) => {
+    
+    // console.log(req)
+    console.log("Request in Route")
+
     const formValues = JSON.parse(req.body.formValues)
 
     // Save Imgs to cloudary
@@ -77,16 +95,6 @@ router.post('/ads', auth, upload.array('photos', 12), async (req, responds) => {
 })
 
 
-
-// router.post('/market-user-data', auth, async (req, responds) => {
-//     adHandlerRequestor.send({type: 'saveMarketLogin', marketLogin: req.body, user: req.user}, (err, res) => {
-//         if(err){
-//             responds.status(400).send("Something went wrong")
-//         } else{
-//             responds.send("Successfully the Login data saved")
-//         }
-//     });
-// });
 
 router.delete('/ads/me', auth, async (req, responds) => {
     adHandlerRequestor.send({type: 'deleteAds', userId: req.userId}, (err, res) => {

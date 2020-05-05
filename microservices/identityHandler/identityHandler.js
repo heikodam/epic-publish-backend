@@ -152,6 +152,5 @@ identityResponder.on('getProfile', async (req, cb) => {
 
 identityResponder.on('getBlacklist', async (req, cb) => {
     const blacklist = blacklistCache.get("blacklist")
-    console.log("Blacklist in identity: ", blacklist)
     cb(null, blacklist)
 })
