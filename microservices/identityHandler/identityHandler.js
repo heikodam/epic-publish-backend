@@ -1,7 +1,9 @@
 const cote = require("cote");
 const jwt = require('jsonwebtoken');
+const NodeCache = require("node-cache");
+const blacklistCache = new NodeCache();
+blacklistCache.set("blacklist", [])
 
-// const {blacklist} = require("../../webAPIGateway/middelware/blacklist");
 
 require("../../database/mongoose")
 const User = require('./userModel');
@@ -67,24 +69,25 @@ identityResponder.on('emailUsed', async (req, cb) => {
     }
 });
 
-
-var blacklist = ["wrong"]
-
-const updateBlacklist = (newVal) => {
-    blacklist[0] = "right"
-    blacklist.push(newVal)
-}
-
 identityResponder.on('logout', async (req, cb) => {
     try {
         
-        const decoded = jwt.verify(req.token, process.env.JWT_SECRET);
-        updateBlacklist(req.token)
-        // blacklist.push(req.token)
-        // console.log("Blacklist in IdentityHandler: ", blacklist)
-        await User.findByIdAndUpdate(decoded._id, {token: undefined}, {new: true, runValidators: true});
+        var blacklist = blacklistCache.get("blacklist")
+        blacklist.push(req.token)
+        blacklistCache.set("blacklist", blacklist)
+
         cb(null, "Logged out")
-        
+
+        var index;
+        for(index = 0; index < blacklist.length; index++){
+            const {exp} = jwt.decode(blacklist[index])
+            var current_time = new Date() / 1000
+
+            if(current_time <= exp){
+                break;
+            }
+        }
+        blacklistCache.set("blacklist", blacklist.slice(index))
 
     } catch (error) {
         console.log("Error is thrown in Logout", error);
@@ -147,6 +150,7 @@ identityResponder.on('getProfile', async (req, cb) => {
 
 
 identityResponder.on('getBlacklist', async (req, cb) => {
-    cb(null, blacklist)
+    const blacklist = blacklistCache.get("blacklist")
+    console.log("Blacklist in identity: ", blacklist)
     cb(null, blacklist)
 })

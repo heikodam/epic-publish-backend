@@ -4,7 +4,7 @@ const Ad = require('../microservices/ads/adModel');
 const {userOneId, userOne, userOneToken, userTwo, userTwoToken, adOneId, adTwoId, adThree, adThreeId, setupDB, clearDB} = require('./fixtures/db');
 
 beforeEach(setupDB);
-
+ 
 
 test("Should get all ads for UserOne", async () => {
     const response = await request(app)

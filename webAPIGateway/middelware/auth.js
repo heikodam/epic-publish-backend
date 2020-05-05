@@ -1,23 +1,24 @@
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = require('../../microservices/identityHandler/userModel');
-const { blacklist } = require("../../microservices/identityHandler/identityHandler");
+// const { blacklist } = require("../../microservices/identityHandler/identityHandler");
 const uri = process.env.MONGODB_URL;
 const cote = require('cote')
 
 
-mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true
-})
+// mongoose.connect(uri, {
+//     useNewUrlParser: true,
+//     useCreateIndex: true,
+//     useFindAndModify: false,
+//     useUnifiedTopology: true
+// })
 
 const auth = async (req, res, next) => {
     try {
         // console.log("Blacklist", blacklist)
         const token = req.cookies.token;
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        // console.log("Decoded: ", decoded)
         const user = await User.findOne({ _id: decoded._id});
 
 
@@ -25,23 +26,27 @@ const auth = async (req, res, next) => {
         // console.log("Id: ", decoded._id)
         // console.log("Token: ", token)
 
-        var blacklist = []
+        // var blacklist = []
 
         identityRequestor.send({type: 'getBlacklist'}, (err, resp) => {
             if(err){
                 res.status(500).send()
             }
+        
             // console.log("resp in auth: ", resp)
-            if(resp[0] === "wrong"){
-                identityRequestor.send({type: 'getBlacklist'}, (err, respond) => {
-                    // console.log("respond in auth: ", respond)
-                    validate(respond)
-                })
-            } else {
-                validate(resp)
-            }
-            
-            blacklist.push(res)
+            // if(resp[0] === "wrong"){
+            //     identityRequestor.send({type: 'getBlacklist'}, (err, respond) => {
+            //         // console.log("respond in auth: ", respond)
+            //         validate(respond)
+            //     })
+            // } else {
+            //     validate(resp)
+            // }
+
+            // console.log("Callback after request in auth")
+            // console.log("Blacklist in auth: ", resp)
+            validate(resp)
+            // blacklist.push(res)
             
     
         })
