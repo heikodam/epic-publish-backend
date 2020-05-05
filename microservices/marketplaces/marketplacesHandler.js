@@ -17,7 +17,7 @@ marketplaceResponder.on('createMarketplace', async (req, cb) => {
         const marketLoginData = {
             ...req.body,
             password: encrypt(req.body.password).encryptedData,
-            userId: req.user._id
+            userId: req.userId
         }
 
         const marketLoginDB = new Marketplace(marketLoginData)
@@ -33,7 +33,7 @@ marketplaceResponder.on('createMarketplace', async (req, cb) => {
 marketplaceResponder.on('getMarketplaces', async (req, cb) => {
 
     try {
-        const marketplaces = await Marketplace.find({userId: req.user._id.toString()})
+        const marketplaces = await Marketplace.find({userId: req.userId.toString()})
 
         if(!marketplaces){
             cb("Bad Request", null)
@@ -94,7 +94,7 @@ marketplaceResponder.on('updateMarketplace', async (req,cb) => {
             cb("Invalid Updates", null)
         } else {
             // updates.forEach((update) => req.user[update] = req.body[update])
-            const marketplace = await Marketplace.updateOne({_id: req.marketplaceId}, req.body)
+            const marketplace = await Marketplace.updateOne({_id: req.marketplaceId, userId: req.userId}, req.body)
             cb(null, marketplace)
 
         }

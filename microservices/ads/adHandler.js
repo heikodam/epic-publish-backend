@@ -44,8 +44,8 @@ adHandlerResponder.on('updateAd', async (req,cb) => {
             cb("Invalid Updates", null)
         } else {
             // updates.forEach((update) => req.user[update] = req.body[update])
-            await Ads.updateOne({_id: req.adId}, req.body)
-            cb(null, req.user)
+            const ad = await Ads.updateOne({_id: req.adId, userId: req.userId}, req.body)
+            cb(null, ad)
 
         }
 
@@ -79,7 +79,7 @@ adHandlerResponder.on('updateAd', async (req,cb) => {
 adHandlerResponder.on('getAds', async (req, cb) => {
 
     try {
-        const ads = await Ads.find({userId: req.user._id.toString()})
+        const ads = await Ads.find({userId: req.userId})
 
         if(!ads){
             cb("Bad Request", null)
@@ -96,10 +96,12 @@ adHandlerResponder.on('getAds', async (req, cb) => {
 adHandlerResponder.on('getAd', async (req, cb) => {
 
     try {
-        const ad = await Ads.findById(req.adId.toString())
+        const ad = await Ads.findOne({_id: req.adId, userId: req.userId})
         if(!ad){
             cb("Bad Request", null)
         } else {
+            delete ad.__v
+            delete userId
             cb(null, ad)
         }
         

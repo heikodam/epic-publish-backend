@@ -42,7 +42,7 @@ router.post('/users/logout', async (req, res) => {
 });
 
 router.delete('/users/me', auth, (req, res) => {
-    identityRequestor.send({type: 'delete', token: req.cookies.token, user: req.user}, (error, user) => {
+    identityRequestor.send({type: 'delete', token: req.cookies.token, userId: req.userId}, (error, user) => {
         if(error){
             res.status(404).send()
         } else {
@@ -56,7 +56,7 @@ router.get('/users/me', auth, (req, res) => {
     // Am already getting all the userdata from auth through req.user and do not need to make a request to db. Could also just send the body from here with
     // res.status(200).send(req.user)
     // But that would be inconsistend with all other requests so I request it from the Micorserver
-    identityRequestor.send({type: 'getProfile', token: req.cookies.token, user: req.user}, (error, user) => {
+    identityRequestor.send({type: 'getProfile', token: req.cookies.token, userId: req.userId}, (error, user) => {
         if(error){
             res.status(404).send()
         } else {
@@ -67,7 +67,7 @@ router.get('/users/me', auth, (req, res) => {
 
 
 router.patch('/users/me', auth, (req, res) => {
-    identityRequestor.send({type: 'updateProfile', token: req.cookies.token, user: req.user, body: req.body}, (error, user) => {
+    identityRequestor.send({type: 'updateProfile', token: req.cookies.token, userId: req.userId, body: req.body}, (error, user) => {
         if(error){
             res.status(400).send()
         } else {

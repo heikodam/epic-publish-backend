@@ -125,7 +125,6 @@ test('Should get the users profile', async () => {
 
     expect(response.body).toMatchObject(
         {
-            _id: userOneId.toString(),
             firstname: 'Gunther',
             surname: 'Horn',
             email: 'gunther@z.com',

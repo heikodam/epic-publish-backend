@@ -15,7 +15,7 @@ const router = new express.Router()
 
 router.get('/ads/me', auth, async (req, responds) => {
 
-    adHandlerRequestor.send({type: 'getAds', user: req.user}, (err, ads) => {
+    adHandlerRequestor.send({type: 'getAds', userId: req.userId}, (err, ads) => {
         if(err){
             responds.status(404).send("You don't have any ads yet")
         } else{
@@ -67,7 +67,7 @@ router.post('/ads', auth, upload.array('photos', 12), async (req, responds) => {
     }
     
     
-    adHandlerRequestor.send({type: 'saveAd', formValues: formValues, imgs: savedImgs, userId: req.user._id}, (err, res) => {
+    adHandlerRequestor.send({type: 'saveAd', formValues: formValues, imgs: savedImgs, userId: req.userId}, (err, res) => {
         if(err){
             responds.status(400).send()
         } else {            
@@ -78,18 +78,18 @@ router.post('/ads', auth, upload.array('photos', 12), async (req, responds) => {
 
 
 
-router.post('/market-user-data', auth, async (req, responds) => {
-    adHandlerRequestor.send({type: 'saveMarketLogin', marketLogin: req.body, user: req.user}, (err, res) => {
-        if(err){
-            responds.status(400).send("Something went wrong")
-        } else{
-            responds.send("Successfully the Login data saved")
-        }
-    });
-});
+// router.post('/market-user-data', auth, async (req, responds) => {
+//     adHandlerRequestor.send({type: 'saveMarketLogin', marketLogin: req.body, user: req.user}, (err, res) => {
+//         if(err){
+//             responds.status(400).send("Something went wrong")
+//         } else{
+//             responds.send("Successfully the Login data saved")
+//         }
+//     });
+// });
 
 router.delete('/ads/me', auth, async (req, responds) => {
-    adHandlerRequestor.send({type: 'deleteAds', userId: req.user._id}, (err, res) => {
+    adHandlerRequestor.send({type: 'deleteAds', userId: req.userId}, (err, res) => {
         if(err){
             responds.status(400).send()
         } else {
@@ -99,7 +99,7 @@ router.delete('/ads/me', auth, async (req, responds) => {
 })
 
 router.delete('/ads/me/:id', auth, async (req, responds) => {
-    adHandlerRequestor.send({type: 'deleteAd', adId: req.params.id, userId: req.user._id}, (err, res) => {
+    adHandlerRequestor.send({type: 'deleteAd', adId: req.params.id, userId: req.userId}, (err, res) => {
         if(err){
             responds.status(400).send()
         } else {
@@ -109,7 +109,7 @@ router.delete('/ads/me/:id', auth, async (req, responds) => {
 })
 
 router.get('/ads/me/:id', auth, async (req, responds) => {
-    adHandlerRequestor.send({type: 'getAd', user: req.user, adId: req.params.id}, (err, ad) => {
+    adHandlerRequestor.send({type: 'getAd', userId: req.userId, adId: req.params.id}, (err, ad) => {
         if(err){
             responds.status(404).send()
         } else{
@@ -119,7 +119,7 @@ router.get('/ads/me/:id', auth, async (req, responds) => {
 })
 
 router.patch('/ads/me/:id', auth, async (req, responds) => {
-    adHandlerRequestor.send({type: 'updateAd', user: req.user, adId: req.params.id, body: req.body}, (err, ad) => {
+    adHandlerRequestor.send({type: 'updateAd', userId: req.userId, adId: req.params.id, body: req.body}, (err, ad) => {
         if(err){
             responds.status(400).send()
         } else{

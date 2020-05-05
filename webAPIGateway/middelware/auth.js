@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
-const User = require('../../microservices/identityHandler/userModel');
+// const mongoose = require('mongoose');
+// const User = require('../../microservices/identityHandler/userModel');
 // const { blacklist } = require("../../microservices/identityHandler/identityHandler");
 const uri = process.env.MONGODB_URL;
 const cote = require('cote')
@@ -19,7 +19,7 @@ const auth = async (req, res, next) => {
         const token = req.cookies.token;
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         // console.log("Decoded: ", decoded)
-        const user = await User.findOne({ _id: decoded._id});
+        // const user = await User.findOne({ _id: decoded._id});
 
 
 
@@ -64,7 +64,8 @@ const auth = async (req, res, next) => {
             }
             else{
                 req.token = token
-                req.user = user
+                req.userId = decoded._id
+                // req.user = user
                 next()
             }
         }

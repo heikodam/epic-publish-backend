@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../webAPIGateway/app');
 const Ad = require('../microservices/ads/adModel');
-const {userOneId, userOne, userOneToken, userTwo, userTwoToken, adOneId, adTwoId, adThree, adThreeId, setupDB, clearDB} = require('./fixtures/db');
+const {userOneId, userOne, userOneToken, userTwo, userTwoToken, adOneId, adTwo, adTwoId, adThree, adThreeId, setupDB, clearDB} = require('./fixtures/db');
 
 beforeEach(setupDB);
  
@@ -61,10 +61,18 @@ test("Should get data of specific ad", async () => {
 
     // Check if response correct
     expect(response.body).toMatchObject({
-        _id: adTwoId.toString(),
+        category: "real-estate",
+        size: 36,
+        rooms: 0,
+        bathrooms: 10,
+        bedrooms: 0,
+        rent: 730,
+        deposit: 1000,
         title: "Amazing House with 10 exclusive Bathrooms",
         description: "This amazing House is a bargin. Where you ever to far away from a bathroom that you where not able to make it. Well in this Apartment with 10 Bathrooms, you always will be near one. You'll never ever be late again. You actually do not have a option to be far away, because this apartment only has bathrooms... enjoy this one in a lifetime oppurtunity",
-        rent: 730,
+        name: "Siebert",
+        phoneNumber: "017628714838",
+        marketplaces: ["ebaykleinanzeige"],
     })
 })
 
