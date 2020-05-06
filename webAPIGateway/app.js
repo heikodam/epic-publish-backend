@@ -1,4 +1,6 @@
-const app = require("express")();
+const express = require("express");
+const path = require("path")
+const app = express();
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser'); 
 const cors = require("cors");
@@ -10,9 +12,6 @@ const marketplaceRouter = require('./routers/marketplace');
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname+'/build/index.html'));
-});
 
 
 app.use(bodyParser.json());
@@ -28,12 +27,12 @@ app.use(userRouter);
 app.use(adRouter);
 app.use(marketplaceRouter);
 
-app.get('/', (req, res) => {
-    res.send("Main Endpoint")
-})
+// app.get('/', (req, res) => {
+//     res.send("Main Endpoint Lekker Millipap")
+// })
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/build/index.html'));
+  res.sendFile(path.join(__dirname+'../build/index.html'));
 });
 
 

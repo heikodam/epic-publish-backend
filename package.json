@@ -19,6 +19,7 @@
     "mongoose": "^5.9.6",
     "multer": "^1.4.2",
     "node-cache": "^5.1.0",
+    "path": "^0.12.7",
     "puppeteer": "^2.1.1",
     "redis-server": "^1.2.2",
     "streamifier": "^0.1.1",
