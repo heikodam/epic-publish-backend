@@ -8,6 +8,12 @@ const userRouter = require('./routers/user');
 const adRouter = require('./routers/ad');
 const marketplaceRouter = require('./routers/marketplace');
 
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname+'/build/index.html'));
+});
+
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -26,6 +32,9 @@ app.get('/', (req, res) => {
     res.send("Main Endpoint")
 })
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/build/index.html'));
+});
 
 
 
