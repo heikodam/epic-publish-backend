@@ -3,22 +3,39 @@ const cote = require("cote");
 const multer = require("multer");
 const cloudinary = require('cloudinary').v2;
 const streamifier = require("streamifier");
+const NodeCache = require("node-cache");
 
-require("../../database/mongoose")
+// require("../../database/mongoose")
 const auth = require("../middelware/auth");
-const Ads = require('../../microservices/ads/adModel');
+// const Ads = require('../../microservices/ads/adModel');
 
 const router = new express.Router()
+const adsCache = new NodeCache();
+
+const checkAdsCache = async (req, res, next) => {
+
+    try{
+        const ads = adsCache.get(req.userId)
+        if(ads){
+            res.send(ads)
+        } else {
+            next()
+        }
+    } catch (error){
+        console.log(error)
+        res.status(500).send()
+    }
+}
 
 
 
-
-router.get('/ads/me', auth, async (req, responds) => {
+router.get('/ads/me', auth, checkAdsCache, async (req, responds) => {
 
     adHandlerRequestor.send({type: 'getAds', userId: req.userId}, (err, ads) => {
         if(err){
             responds.status(404).send("You don't have any ads yet")
         } else{
+            adsCache.set(req.userId, ads, 7200)
             responds.send(ads)
         }
     });
@@ -64,8 +81,7 @@ let streamUpload = (buffer) => {
 
 router.post('/ads', auth, upload.array('photos', 12), async (req, responds) => {
     
-    // console.log(req)
-    console.log("Request in Route")
+    adsCache.del(req.userId)
 
     const formValues = JSON.parse(req.body.formValues)
 
@@ -97,6 +113,7 @@ router.post('/ads', auth, upload.array('photos', 12), async (req, responds) => {
 
 
 router.delete('/ads/me', auth, async (req, responds) => {
+    adsCache.del(req.userId)
     adHandlerRequestor.send({type: 'deleteAds', userId: req.userId}, (err, res) => {
         if(err){
             responds.status(400).send()
@@ -107,6 +124,7 @@ router.delete('/ads/me', auth, async (req, responds) => {
 })
 
 router.delete('/ads/me/:id', auth, async (req, responds) => {
+    adsCache.del(req.userId)
     adHandlerRequestor.send({type: 'deleteAd', adId: req.params.id, userId: req.userId}, (err, res) => {
         if(err){
             responds.status(400).send()
@@ -127,6 +145,7 @@ router.get('/ads/me/:id', auth, async (req, responds) => {
 })
 
 router.patch('/ads/me/:id', auth, async (req, responds) => {
+    adsCache.del(req.userId)
     adHandlerRequestor.send({type: 'updateAd', userId: req.userId, adId: req.params.id, body: req.body}, (err, ad) => {
         if(err){
             responds.status(400).send()

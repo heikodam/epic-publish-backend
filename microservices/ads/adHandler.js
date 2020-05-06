@@ -57,27 +57,7 @@ adHandlerResponder.on('updateAd', async (req,cb) => {
 
 
 
-// adHandlerResponder.on('saveMarketLogin', async (req, cb) => {
-//     try {
-//         const marketLoginData = {
-//             ...req.marketLogin,
-//             password: encrypt(req.marketLogin.password).encryptedData,
-//             userID: req.user._id
-//         }
-
-//         const marketLoginDB = new MarketLogin(marketLoginData)
-//         await marketLoginDB.save()
-//         cb(null, "Successfully saved")
-
-//     } catch (error) {
-//         console.log("Error: ", error)
-//         cb("Something went wrong", null)
-//     }
-// });
-
-
 adHandlerResponder.on('getAds', async (req, cb) => {
-
     try {
         const ads = await Ads.find({userId: req.userId})
 
