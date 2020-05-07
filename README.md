@@ -81,8 +81,7 @@ In this resource the password element can not be hashed, since the clear text is
 
 ### Users
 #### POST /users/:
-**Action**:
-- Create a new user in the Database.
+- **Action**: Create a new user in the Database.
 
 **Returns**: 
 - Failure Status: 400
@@ -91,36 +90,33 @@ In this resource the password element can not be hashed, since the clear text is
 <br />
 
 #### POST /users/login/:
-**Action**:
-- Login User by sending email and password
+- **Action**: Login User by sending email and password
 
-**Returns**: 
-- Failure Status: 401
-- Success Status: 200
-- Data: {user: {firstname, surname, email, date}, token}
+- **Returns**: 
+    - Failure Status: 401
+    - Success Status: 200
+    - Data: {user: {firstname, surname, email, date}, token}
 <br />
 
 #### Post /users/logout/:
-**Action**:
-Logs the current user out.
-- Cookies are cleared
-- Token gets Blacklisted
-- Expired Tokens on Blacklist are removed
+- **Action**: Logs the current user out.
+    - Cookies are cleared
+    - Token gets Blacklisted
+    - Expired Tokens on Blacklist are removed
 
-**Returns**: 
-- Failure Status: 400
-- Success Status: 200
-- Data: {firstname, surname, email, date}
+- **Returns**: 
+    - Failure Status: 400
+    - Success Status: 200
+    - Data: {firstname, surname, email, date}
 <br />
 
 #### GET /users/me/:
-**Action**:
-- Get the current users profile data.
+- **Action**: Get the current users profile data.
 
-**Returns**: 
-- Failure Status: 404
-- Success Status: 200
-- Data: {firstname, surname, email, date}
+- **Returns**: 
+    - Failure Status: 404
+    - Success Status: 200
+    - Data: {firstname, surname, email, date}
 <br />
 
 
