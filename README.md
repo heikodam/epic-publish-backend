@@ -84,12 +84,12 @@ Format:
 #### POST /users/:
 
 **Action**:
-Create a new user in the Database.
+- Create a new user in the Database.
 
 **Returns**: 
-    Failure Status: 400
-    Success Status: 201
-    Data: Full User Profile
+- Failure Status: 400
+- Success Status: 201
+- Data: Full User Profile
          
 
 ### Users
