@@ -4,8 +4,9 @@
 3. [Architecture & Tech Stack](#architecture)
 4. [Resources](#resources)
 5. [Routes](#routes)
+6. [Worth Mentioning](#mentioning)
+7. [Testing](#testing)
 
-...snip... 
 
 <a name="my-project"/>
 
@@ -43,6 +44,7 @@ Img DB:
 Imgs are stored on [Cloudinary](https://cloudinary.com/)
 
 <a name="resources"/>
+
 ## Resources
 
 All elements marked with a * are required.
@@ -263,6 +265,8 @@ In this resource the password element can not be hashed, since the clear text is
     - Data: {username, marketplace}
 <br />
 
+<a name="mentioning"/>
+
 ## Worth Mentioning:
 
 ### Microservices:
@@ -288,6 +292,8 @@ I used [cote](https://www.npmjs.com/package/cote) which is a Zero Configaration 
 - Whenever a client makes a request to get all ads, it is first checked if a cache for the user is there and if so the cache is send back.
 - Whenever an ad or ads are deleted, updated or created the cache is deleted. 
 - The cache is also deleted after 2h, which is the same duration for tokens to expire
+
+<a name="testing"/>
 
 ## Testing
 
