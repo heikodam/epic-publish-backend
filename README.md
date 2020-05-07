@@ -100,9 +100,6 @@ In this resource the password element can not be hashed, since the clear text is
 
 #### Post /users/logout/
 - **Action**: Logs the current user out.
-    - Cookies are cleared
-    - Token gets Blacklisted
-    - Expired Tokens on Blacklist are removed
 
 - **Returns**: 
     - Failure Status: 400
@@ -267,7 +264,7 @@ I used [cote](https://www.npmjs.com/package/cote) which is a Zero Configaration 
 - When sending data to the Post ad route, one has the option either to send links to where the imgs are saved in the "imgLinks" key, or through form data in a "photos:" and then the web app will upload the photos to [Cloudinary](https://cloudinary.com/) and save the links in the links in the "imgLinks:" key.
 
 
-### Chaching:
+### Caching:
 - When a client makes a request to get all ads, the webapi forwards the request to the ads Microservice, which then makes the request to the DB. Then the list of ads is send back on the same route to the client. 
 - To make this as efficient as possible I am caching the list of ads, in the webAPIGateway.
 - Whenever a client makes a request to get all ads, it is first checked if a cache for the user is there and if so the cache is send back.
