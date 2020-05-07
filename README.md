@@ -79,8 +79,8 @@ In this resource the password element can not be hashed, since the clear text is
 
 ## Routes        
 
-### Users
-#### POST /users/:
+### Users:
+#### POST /users/
 - **Action**: Create a new user in the Database.
 
 **Returns**: 
@@ -89,7 +89,7 @@ In this resource the password element can not be hashed, since the clear text is
 - Data: {firstname, surname, email, date}
 <br />
 
-#### POST /users/login/:
+#### POST /users/login/
 - **Action**: Login User by sending email and password
 
 - **Returns**: 
@@ -98,7 +98,7 @@ In this resource the password element can not be hashed, since the clear text is
     - Data: {user: {firstname, surname, email, date}, token}
 <br />
 
-#### Post /users/logout/:
+#### Post /users/logout/
 - **Action**: Logs the current user out.
     - Cookies are cleared
     - Token gets Blacklisted
@@ -110,7 +110,7 @@ In this resource the password element can not be hashed, since the clear text is
     - Data: {firstname, surname, email, date}
 <br />
 
-#### GET /users/me/:
+#### GET /users/me/
 - **Action**: Get the current users profile data.
 
 - **Returns**: 
@@ -119,7 +119,7 @@ In this resource the password element can not be hashed, since the clear text is
     - Data: {firstname, surname, email, date}
 <br />
 
-#### DELETE /users/me/:
+#### DELETE /users/me/
 - **Action**: Delete the current logged in User
 
 - **Returns**: 
@@ -128,7 +128,7 @@ In this resource the password element can not be hashed, since the clear text is
     - Data: 
 <br />
 
-#### PATCH /users/me/:
+#### PATCH /users/me/
 - **Action**: Update the current User Profile data.
 
 - **Returns**: 
@@ -138,8 +138,8 @@ In this resource the password element can not be hashed, since the clear text is
 <br />
 
 
-### Ads
-#### POST /ads/:
+### Ads:
+#### POST /ads/
 - **Action**: Create a new ad.
 
 - **Returns**: 
@@ -148,7 +148,7 @@ In this resource the password element can not be hashed, since the clear text is
     - Data: Full Newly Created Ad
 <br />
 
-#### GET /ads/me/:
+#### GET /ads/me/
 - **Action**: Get all ads of current user.
 
 - **Returns**: 
@@ -157,7 +157,7 @@ In this resource the password element can not be hashed, since the clear text is
     - Data: List of all ads of the user
 <br />
 
-#### GET /ads/me/:adId :
+#### GET /ads/me/:adId
 - **Action**: Get the data of one specific ad.
 
 - **Returns**: 
@@ -166,7 +166,7 @@ In this resource the password element can not be hashed, since the clear text is
     - Data: Full Data of Ad 
 <br />
 
-#### DELETE /ads/me :
+#### DELETE /ads/me
 - **Action**: Delete all ads for current user.
 
 - **Returns**: 
@@ -189,18 +189,107 @@ In this resource the password element can not be hashed, since the clear text is
 
 - **Returns**: 
     - Failure Status: 400
-    - Success Status: 201
+    - Success Status: 200
     - Data: Full Newly Updated Ad
 <br />
 
-### Marketplaces
+### Marketplaces:
+#### POST /marketplaces/
+- **Action**: Create a new Marketplace.
 
-## Deployment
+- **Returns**: 
+    - Failure Status: 400
+    - Success Status: 201
+    - Data: 
+<br />
 
-# Worth Mentioning
+#### GET /marketplaces/me
+- **Action**: Get all Marketplaces of current user.
 
-## Chaching
+- **Returns**: 
+    - Failure Status: 404
+    - Success Status: 200
+    - Data: List of all Marketplaces [{username, marketplace}] 
+<br />
 
-# Testing
+#### Get /marketplaces/me/:marketplaceId
+- **Action**: Get data of a specific Marketplace.
 
-To Remove the logging from cote go to node_modules\cote\src\components\discovery.js and in default Options change log to false
+- **Returns**: 
+    - Failure Status: 404
+    - Success Status: 200
+    - Data: {username, marketplace}
+<br />
+
+#### DELETE /marketplaces/me/
+- **Action**: Delete all marketplaces of current user.
+
+- **Returns**: 
+    - Failure Status: 404
+    - Success Status: 200
+    - Data: 
+<br />
+
+#### DELETE /marketplaces/me/:marketplaceId
+- **Action**: Delete a specific Marketplace.
+
+- **Returns**: 
+    - Failure Status: 404
+    - Success Status: 200
+    - Data:
+<br />
+
+#### PATCH /marketplaces/me/:marketplaceId
+- **Action**: Update specific Marketplace (Only username allowed to be updated).
+
+- **Returns**: 
+    - Failure Status: 400
+    - Success Status: 200
+    - Data: {username, marketplace}
+<br />
+
+## Worth Mentioning:
+
+### Microservices:
+I used Microservices in this Application, which is defnitly an overkill with the current functionality. But in the future when the functionality is added to actually post ads on The different marketplaces, Microservices start to make sense. One can then have one Micorservice for each Marketplace, which has the big benefit if one marketplaces changes it functionality/ code/ requirments and the Micorservice fails, all the other Services will not be affected.
+I used [cote](https://www.npmjs.com/package/cote) which is a Zero Configaration Micorservices tool, which makes it fairly easy to set up. But this comes with the limitation that one has minimum power over customizing how services interact with eachother.   
+
+### Authentication:
+
+- For each Authentication I do not need to make a request to the DB thus saving a lot of computing power and time
+- Using Jwt to create tokens for Authentication
+- Each token expires within 2h of creation
+- Many routes are protected by a Authentication Middleware I created that confirms that the token in the **cookies** is valid and was not blacklisted. If the token is valid then the user Id is taken out of the token and is passed on with the request to the route. 
+- if someone logs out before the token is expired the token goes on a **Blacklist** (incase the token was stolen from the client side)
+-  Each time a user loggs out the Blacklist is updated and all expired tokens are removed from the Blacklist 
+
+### Saving Imgs:
+- When sending data to the Post ad route, one has the option either to send links to where the imgs are saved in the "imgLinks" key, or through form data in a "photos:" and then the web app will upload the photos to [Cloudinary](https://cloudinary.com/) and save the links in the links in the "imgLinks:" key.
+
+
+### Chaching:
+- When a client makes a request to get all ads, the webapi forwards the request to the ads Microservice, which then makes the request to the DB. Then the list of ads is send back on the same route to the client. 
+- To make this as efficient as possible I am caching the list of ads, in the webAPIGateway.
+- Whenever a client makes a request to get all ads, it is first checked if a cache for the user is there and if so the cache is send back.
+- Whenever an ad or ads are deleted, updated or created the cache is deleted. 
+- The cache is also deleted after 2h, which is the same duration for tokens to expire
+
+## Testing
+
+This application can only be tested locally. 
+
+To do so clone this repo and install all dependencies.
+
+Next you'll need to remove the logs from cote, otherwise you'll run into problems when testing.
+
+To Remove the logging from cote go to node_modules\cote\src\components\discovery.js and in default Options change log to false.
+
+next start the required microservices with:
+```bash
+npm run test-services
+```
+
+Run the tests with:
+```bash
+npm run tests
+```

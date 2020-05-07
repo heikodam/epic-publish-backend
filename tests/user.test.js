@@ -21,7 +21,7 @@ test('Should Create a User', async () => {
     .expect(201)
 
     // Assert that the database was changed correctly
-    const user = await User.findById(response.body.user._id)
+    const user = await User.findOne({firstname: 'Uwe', surname: "Stein"})
     expect(user).not.toBeNull()
     
     // Assert that the response is correct
@@ -62,7 +62,6 @@ test('Should login existing user', async () => {
 
     // Check if response data is correct
     expect(response.body.user).toMatchObject({
-        _id: userOneId.toString(),
         firstname: user.firstname,
         surname: user.surname,
         email: user.email,
