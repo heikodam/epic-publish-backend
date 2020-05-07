@@ -29,7 +29,7 @@ Password: 1234567
 
 ## Architecture & Tech Stack
 
-<img src="https://res.cloudinary.com/heikodam/image/upload/v1588881439/Epic_Publish_Architecture_umw5cc.jpg" width="500">
+<img src="https://res.cloudinary.com/heikodam/image/upload/v1588881439/Epic_Publish_Architecture_umw5cc.jpg" width="700">
 
 Client: React
 
