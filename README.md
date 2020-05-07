@@ -13,12 +13,27 @@ Client: React
 
 Backend: 
 - Nodejs
-- For Micorservices I used [cote](https://www.npmjs.com/package/cote) zero-configuration microservices 
+- For Micorservices I used [cote](https://www.npmjs.com/package/cote) a zero-configuration microservices
+
+DB:
+My NoSQL DB is running on [MongoDB](https://www.mongodb.com/)
+
+Img DB:
+Imgs are stored on [Cloudinary](https://cloudinary.com/)
 
 ## Resources
 
 ### Users:
-
+```node
+{
+    _id,
+    firstname,
+    surname,
+    email,
+    password,
+    date
+}
+```
 ### Ads:
 
 ### Marketplaces:
