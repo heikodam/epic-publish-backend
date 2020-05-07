@@ -1,6 +1,7 @@
 # Table of Contents
 1. [My Project](#my-project)
 2. [How far did I get](#how-far)
+2. [How to run locally](#locally)
 3. [Architecture & Tech Stack](#architecture)
 4. [Resources](#resources)
 5. [Routes](#routes)
@@ -26,6 +27,7 @@ Password: 1234567
 
 [Client Repo](https://github.com/heikodam/epic-publish-client)
 
+<a name="Locally"/>
 
 ## How to run this locally
 Incase the [online version](https://fierce-tundra-77613.herokuapp.com/) is not suitable for yourrequirments, this is how to set it up locally. 
