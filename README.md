@@ -1,9 +1,11 @@
 # Table of Contents
-[My Project](#my-project)
-[How far did I get](#how-far)
-[Architecture & Tech Stack](#architecture)
-[Resources](#resources)
-[Routes](#routes)
+1. [My Project](#my-project)
+2. [How far did I get](#how-far)
+3. [Architecture & Tech Stack](#architecture)
+4. [Resources](#resources)
+5. [Routes](#routes)
+
+...snip... 
 
 <a name="my-project"/>
 # My Project: Epic Publish:
