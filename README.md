@@ -82,10 +82,8 @@ In this resource the password element can not be hashed, since the clear text is
 Format:
 
 #### POST /users/:
-
 **Action**:
 - Create a new user in the Database.
-
 **Returns**: 
 - Failure Status: 400
 - Success Status: 201
