@@ -44,24 +44,6 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-// FUNCTION NOT WORKING
-userSchema.statics.findByCredentials = async (email, password) => {
-    console.log("Middleware is Running now now, This should never run");
-    return {name: "Middaleware Success"}
-    // const user = await User.findOne({ email })
-
-    // if (!user) {
-    //     throw new Error('Unable to login')
-    // }
-
-    // const isMatch = await bcrypt.compare(password, user.password)
-
-    // if (!isMatch) {
-    //     throw new Error('Unable to login')
-    // }
-
-    // return user
-}
 
 userSchema.methods.isUser = async function(password) {
 

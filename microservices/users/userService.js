@@ -97,7 +97,6 @@ identityResponder.on('logout', async (req, cb) => {
 
 identityResponder.on('delete', async (req, cb) => {
     try {
-        // const decoded = jwt.verify(req.token, process.env.JWT_SECRET);
         const user = await User.findByIdAndDelete(req.userId)
 
         if(!user){cb("Not Found", null)}

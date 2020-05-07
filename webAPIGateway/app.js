@@ -27,10 +27,6 @@ app.use(userRouter);
 app.use(adRouter);
 app.use(marketplaceRouter);
 
-// app.get('/', (req, res) => {
-//     res.send("Main Endpoint Lekker Millipap")
-// })
-
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'../build/index.html'));
 });

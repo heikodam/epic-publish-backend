@@ -93,7 +93,6 @@ marketplaceResponder.on('updateMarketplace', async (req,cb) => {
         if(InvalidOperation){
             cb("Invalid Updates", null)
         } else {
-            // updates.forEach((update) => req.user[update] = req.body[update])
             const marketplace = await Marketplace.updateOne({_id: req.marketplaceId, userId: req.userId}, req.body)
             cb(null, marketplace)
 
@@ -104,29 +103,4 @@ marketplaceResponder.on('updateMarketplace', async (req,cb) => {
         cb("There was an Error", null)
     }
 })
-
-
-
-
-
-
-// marketplaceResponder.on('saveAd', async (req, cb) => {
-
-//     try {
-
-//         var newAd = {...req.formValues}
-//         newAd.imgs = req.imgs
-//         newAd.date = new Date()
-//         newAd.userId = req.userId
-
-//         const adsDB = new Ads(newAd)
-//         await adsDB.save()
-
-
-//         cb(null, "Successfully saved")
-//     } catch (err) {
-//         cb("Something went wrong", null)
-
-//     }
-// });
 

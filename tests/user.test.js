@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../webAPIGateway/app');
-const User = require('../microservices/identityHandler/userModel');
+const User = require('../microservices/users/userModel');
 const {userOneId, userOne, setupDB, userOneToken} = require('./fixtures/db');
 
 // beforeAll(clearDB)

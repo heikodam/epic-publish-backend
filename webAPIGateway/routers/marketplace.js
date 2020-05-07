@@ -70,28 +70,6 @@ router.patch('/marketplaces/me/:id', auth, async (req, responds) => {
     });
 })
 
-// router.post('/marketplaces', async (req, responds) => {
-    
-//     marketplaceRequestor.send({type: 'saveAd', formValues: formValues, imgs: savedImgs, userId: req.user._id}, (err, res) => {
-//         if(err){
-//             responds.status(400).send()
-//         } else {            
-//             responds.status(201).send()
-//         }
-//     });
-// })
-
-
-
-
-
-
-
-
-
-
-
-
 const marketplaceRequestor = new cote.Requester({
     name: 'Marketplace Handler requestor',
     namespace: 'marketplaceHandler'

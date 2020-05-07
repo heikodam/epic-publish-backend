@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const User = require("../../microservices/identityHandler/userModel");
+const User = require("../../microservices/users/userModel");
 const Ad = require("../../microservices/ads/adModel");
 const Marketplace = require("../../microservices/marketplaces/marketplaceModel");
 
@@ -27,7 +27,6 @@ const userTwo = {
     date: new Date(),
 }
 
-// Ad for User One
 const adOneId = new mongoose.Types.ObjectId()
 const adOne = {
     _id: adOneId,
@@ -46,7 +45,6 @@ const adOne = {
     date: new Date()
 }
 
-// Second and for UserOne
 const adTwoId = new mongoose.Types.ObjectId()
 const adTwo = {
     _id: adTwoId,

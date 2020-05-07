@@ -31,18 +31,18 @@
     "supertest": "^4.0.2"
   },
   "scripts": {
-    "start": "concurrently \"node webAPIGateway/index.js\" \"node microservices/identityHandler/identityHandler.js \" \"node microservices/ads/adHandler.js\" \"node microservices/marketplaces/marketplacesHandler.js\"",
+    "start": "concurrently \"node webAPIGateway/index.js\" \"node microservices/users/userService.js \" \"node microservices/ads/adService.js\" \"node microservices/marketplaces/marketplacesService.js\"",
     "test": "env-cmd -f ./config/test.env jest --watch --runInBand",
-    "test-services": "concurrently \"env-cmd -f ./config/test.env nodemon microservices/identityHandler/identityHandler.js \" \"env-cmd -f ./config/test.env nodemon microservices/ads/adHandler.js\" \"env-cmd -f ./config/test.env nodemon microservices/marketplaces/marketplacesHandler.js\"",
-    "all-services": "concurrently \"env-cmd -f ./config/dev.env nodemon webAPIGateway/index.js \" \"env-cmd -f ./config/dev.env nodemon microservices/identityHandler/identityHandler.js \" \"env-cmd -f ./config/dev.env nodemon microservices/ads/adHandler.js\" \"env-cmd -f ./config/dev.env nodemon microservices/marketplaces/marketplacesHandler.js\"",
+    "test-services": "concurrently \"env-cmd -f ./config/test.env nodemon microservices/users/userService.js \" \"env-cmd -f ./config/test.env nodemon microservices/ads/adService.js\" \"env-cmd -f ./config/test.env nodemon microservices/marketplaces/marketplacesService.js\"",
+    "all-services": "concurrently \"env-cmd -f ./config/dev.env nodemon webAPIGateway/index.js \" \"env-cmd -f ./config/dev.env nodemon microservices/users/userService.js \" \"env-cmd -f ./config/dev.env nodemon microservices/ads/adService.js\" \"env-cmd -f ./config/dev.env nodemon microservices/marketplaces/marketplacesService.js\"",
     "webapi-test": "env-cmd -f ./config/test.env nodemon webAPIGateway/index.js",
-    "identity-test": "env-cmd -f ./config/test.env nodemon microservices/identityHandler/identityHandler.js ",
-    "ads-test": "env-cmd -f ./config/test.env nodemon microservices/ads/adHandler.js",
-    "marketplaces-test": "env-cmd -f ./config/test.env nodemon microservices/marketplaces/marketplacesHandler.js",
+    "identity-test": "env-cmd -f ./config/test.env nodemon microservices/users/userService.js ",
+    "ads-test": "env-cmd -f ./config/test.env nodemon microservices/ads/adService.js",
+    "marketplaces-test": "env-cmd -f ./config/test.env nodemon microservices/marketplaces/marketplacesService.js",
     "webapi": "env-cmd -f ./config/dev.env nodemon webAPIGateway/index.js",
-    "identity": "env-cmd -f ./config/dev.env nodemon microservices/identityHandler/identityHandler.js ",
-    "ads": "env-cmd -f ./config/dev.env nodemon microservices/ads/adHandler.js",
-    "marketplaces": "env-cmd -f ./config/dev.env nodemon microservices/marketplaces/marketplacesHandler.js"
+    "identity": "env-cmd -f ./config/dev.env nodemon microservices/users/userService.js ",
+    "ads": "env-cmd -f ./config/dev.env nodemon microservices/ads/adService.js",
+    "marketplaces": "env-cmd -f ./config/dev.env nodemon microservices/marketplaces/marketplacesService.js"
   },
   "jest": {
     "testEnvironment": "node"

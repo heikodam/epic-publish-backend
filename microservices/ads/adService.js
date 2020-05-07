@@ -1,8 +1,5 @@
 const cote = require("cote");
 
-// const encrypt = require("./crypt");
-// const MarketLogin = require('./marketLoginModel');
-
 require("../../database/mongoose")
 const Ads = require('./adModel.js');
 
@@ -43,7 +40,6 @@ adHandlerResponder.on('updateAd', async (req,cb) => {
         if(InvalidOperation){
             cb("Invalid Updates", null)
         } else {
-            // updates.forEach((update) => req.user[update] = req.body[update])
             const ad = await Ads.updateOne({_id: req.adId, userId: req.userId}, req.body)
             cb(null, ad)
 

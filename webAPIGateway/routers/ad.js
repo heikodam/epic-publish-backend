@@ -5,9 +5,7 @@ const cloudinary = require('cloudinary').v2;
 const streamifier = require("streamifier");
 const NodeCache = require("node-cache");
 
-// require("../../database/mongoose")
 const auth = require("../middelware/auth");
-// const Ads = require('../../microservices/ads/adModel');
 
 const router = new express.Router()
 const adsCache = new NodeCache();
