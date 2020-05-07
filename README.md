@@ -8,10 +8,12 @@
 ...snip... 
 
 <a name="my-project"/>
+
 # My Project: Epic Publish:
 Go on the Website fill out a form to post an Ad to rent our your Apartment. The Web App should then post it on the different marketplaces (eg. ebay-kleinanzeige, immobilienscout24, immowelt...).
 
 <a name="how-far"/>
+
 ## How far did I get?
 One is able to create/edit/delete an account, ads and Marketplaces. But the functionality of publishing the ads on the marketplaces I have not started yet. 
 
@@ -23,6 +25,7 @@ Password: 1234567
 
 
 <a name="architecture"/>
+
 ## Architecture & Tech Stack
 
 Post Img here:
@@ -91,6 +94,7 @@ In this resource the password element can not be hashed, since the clear text is
 
 
 <a name="routes"/>
+
 ## Routes        
 
 ### Users:
