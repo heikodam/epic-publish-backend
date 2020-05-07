@@ -101,11 +101,11 @@ router.post('/ads', auth, upload.array('photos', 12), async (req, responds) => {
     }
     
     
-    adHandlerRequestor.send({type: 'saveAd', formValues: formValues, imgs: savedImgs, userId: req.userId}, (err, res) => {
+    adHandlerRequestor.send({type: 'saveAd', formValues: formValues, imgs: savedImgs, userId: req.userId}, (err, ad) => {
         if(err){
             responds.status(400).send()
         } else {            
-            responds.status(201).send()
+            responds.status(201).send(ad)
         }
     });
 })

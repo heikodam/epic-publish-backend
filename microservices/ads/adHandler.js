@@ -105,7 +105,7 @@ adHandlerResponder.on('saveAd', async (req, cb) => {
         await adsDB.save()
 
 
-        cb(null, "Successfully saved")
+        cb(null, adsDB)
     } catch (err) {
         cb("Something went wrong", null)
 

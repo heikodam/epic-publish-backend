@@ -119,12 +119,87 @@ In this resource the password element can not be hashed, since the clear text is
     - Data: {firstname, surname, email, date}
 <br />
 
+#### DELETE /users/me/:
+- **Action**: Delete the current logged in User
+
+- **Returns**: 
+    - Failure Status: 404
+    - Success Status: 200
+    - Data: 
+<br />
+
+#### PATCH /users/me/:
+- **Action**: Update the current User Profile data.
+
+- **Returns**: 
+    - Failure Status: 400
+    - Success Status: 200
+    - Data: {firstname, surname, email, date}
+<br />
+
 
 ### Ads
+#### POST /ads/:
+- **Action**: Create a new ad.
+
+- **Returns**: 
+    - Failure Status: 400
+    - Success Status: 201
+    - Data: Full Newly Created Ad
+<br />
+
+#### GET /ads/me/:
+- **Action**: Get all ads of current user.
+
+- **Returns**: 
+    - Failure Status: 404
+    - Success Status: 200
+    - Data: List of all ads of the user
+<br />
+
+#### GET /ads/me/:adId :
+- **Action**: Get the data of one specific ad.
+
+- **Returns**: 
+    - Failure Status: 404
+    - Success Status: 200
+    - Data: Full Data of Ad 
+<br />
+
+#### DELETE /ads/me :
+- **Action**: Delete all ads for current user.
+
+- **Returns**: 
+    - Failure Status: 404
+    - Success Status: 200
+    - Data: 
+<br />
+
+#### DELETE /ads/me/:adId
+- **Action**: Delete a specific ad.
+
+- **Returns**: 
+    - Failure Status: 404
+    - Success Status: 200
+    - Data: 
+<br />
+
+#### PATCH /ads/me/:adId
+- **Action**: Update specific Ad.
+
+- **Returns**: 
+    - Failure Status: 400
+    - Success Status: 201
+    - Data: Full Newly Updated Ad
+<br />
+
 ### Marketplaces
 
 ## Deployment
 
+# Worth Mentioning
+
+## Chaching
 
 # Testing
 
