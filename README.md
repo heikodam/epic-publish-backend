@@ -24,6 +24,19 @@ You can either signup and add your own data or use this account where data is al
 Email: a@b.com
 Password: 1234567
 
+[Client Repo](https://github.com/heikodam/epic-publish-client)
+
+
+## How to run this locally
+Incase the [online version](https://fierce-tundra-77613.herokuapp.com/) is not suitable for yourrequirments, this is how to set it up locally. 
+
+1. Clone this Repo and install all dependencies
+2. Run this command
+```bash
+npm run all-services
+```
+3. Go to this site [http://localhost:4545/](http://localhost:4545/)
+
 
 <a name="architecture"/>
 
