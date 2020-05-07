@@ -22,7 +22,7 @@ identityResponder.on('createUser', async (req, cb) => {
         user.date = new Date()
         await user.save()
         const token = await user.generateAuthToken()
-        cb(null, {user: {_id: user._id, firstname: user.firstname, surname: user.surname, email: user.email}, token})
+        cb(null, {user: {firstname: user.firstname, surname: user.surname, email: user.email, date: user.date}, token})
     } catch (error) {
         cb("Unable to Sign You up", null)
     }
@@ -48,7 +48,7 @@ identityResponder.on('login', async (req, cb) => {
     // Generate the User Token if entered Data is correct
     const token = await user.generateAuthToken()
 
-    cb(null, {user: {_id: user._id, firstname: user.firstname, surname: user.surname, email: user.email, date: user.date}, token})
+    cb(null, {user: {firstname: user.firstname, surname: user.surname, email: user.email, date: user.date}, token})
 });
 
 
