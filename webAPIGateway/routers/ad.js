@@ -1,8 +1,9 @@
 const express = require("express");
 const cote = require("cote");
 const multer = require("multer");
-const cloudinary = require('cloudinary').v2;
-const streamifier = require("streamifier");
+// const cloudinary = require('cloudinary');
+// const streamifier = require("streamifier");
+const {streamUpload} = require("./streamUpload");
 const NodeCache = require("node-cache");
 
 const auth = require("../middelware/auth");
@@ -47,41 +48,42 @@ const upload = multer({
     }, 
     fileFilter(req, file, cb){
         // console.log("Request in upload", req)
-        console.log("Request in upload")
-        console.log(file.originalname)
+        // console.log("Request in upload")
+        // console.log(file.originalname)
         if(!file.originalname.match(/\.(jpg|jpeg|png)$/)){
-            console.log("Rejects this file")
+            console.log("Rejects this file: ", file.originalname)
             return cb(new Error("Please upload an image"))
         }
         cb(undefined, true)
     }
 });
-// Function from cloudinary support https://support.cloudinary.com/hc/en-us/community/posts/360007581379-Correct-way-of-uploading-from-buffer-
-let streamUpload = (buffer) => {
-    return new Promise((resolve, reject) => {
-      let stream = cloudinary.uploader.upload_stream(
-        {
-            folder: "adPhotos"
-        },
-        (error, result) => {
-          if (result) {
-            resolve(result);
-          } else {
-            reject(error);
-          }
-        }
-      );
-      streamifier.createReadStream(buffer).pipe(stream);
-    });
-  };
+// // Function from cloudinary support https://support.cloudinary.com/hc/en-us/community/posts/360007581379-Correct-way-of-uploading-from-buffer-
+// let streamUpload = (buffer) => {
+//     return new Promise((resolve, reject) => {
+//       let stream = cloudinary.uploader.upload_stream(
+//         {
+//             folder: "adPhotos"
+//         },
+//         (error, result) => {
+//           if (result) {
+//             resolve(result);
+//           } else {
+//             reject(error);
+//           }
+//         }
+//       );
+//       streamifier.createReadStream(buffer).pipe(stream);
+//     });
+//   };
   
 
 
 router.post('/ads', auth, upload.array('photos', 12), async (req, responds) => {
     
     adsCache.del(req.userId)
-
+    // console.log(req)
     const formValues = JSON.parse(req.body.formValues)
+    
 
     // Save Imgs to cloudary
     var savedImgs = []
@@ -90,14 +92,16 @@ router.post('/ads', auth, upload.array('photos', 12), async (req, responds) => {
     try {
         if(req.files){
             for(var x = 0; x < req.files.length; x++){
+                console.log("Now in For loop")
                 imgRes = await streamUpload(req.files[x].buffer);
+                console.log("after upload img in for loop")
                 savedImgs.push(imgRes)
             }    
         }
     } catch (error){
-        console.log(error)
+        console.log("Catch in Upload files", error)
     }
-    
+    console.log("savedImgs", savedImgs);
     
     adHandlerRequestor.send({type: 'saveAd', formValues: formValues, imgs: savedImgs, userId: req.userId}, (err, ad) => {
         if(err){

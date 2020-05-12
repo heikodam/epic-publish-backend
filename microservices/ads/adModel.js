@@ -25,7 +25,7 @@ const adSchema = new mongoose.Schema({
     marketplaces: {
         type: Array
     },
-    imgLinks: {
+    imgs: {
         type: Array
     }
 }, { strict: false });

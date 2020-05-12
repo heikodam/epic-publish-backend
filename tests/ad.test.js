@@ -1,4 +1,7 @@
 const request = require('supertest');
+const FormData = require('form-data');
+const path = require('path');
+const fs = require('fs');
 const app = require('../webAPIGateway/app');
 const Ad = require('../microservices/ads/adModel');
 const {userOneId, userOne, userOneToken, userTwo, userTwoToken, adOneId, adTwo, adTwoId, adThree, adThreeId, setupDB, clearDB} = require('./fixtures/db');
@@ -26,17 +29,23 @@ test("Should get all ads for UserOne", async () => {
 });
 
 test("Should create ad for UserTwo", async () => {
+    // var form = new FormData();
+    // form.append('photos', fs.createReadStream(path.join(__dirname, '/resources/house.jpg')))
+
+    // form.append("formValues", JSON.stringify(adThree))
+
     const adDataToSave = {"formValues": JSON.stringify(adThree)}
-    
     await request(app)
     .post('/ads')
     .set('Cookie', [`token=${userTwoToken}`])
-    .send(adDataToSave)
+    .field("formValues", JSON.stringify(adThree))
+    // .attach('photos', path.join(__dirname, '/resources/house.jpg'))
+    // .end(done)
     .expect(201)
 
-    // Check if ad was added
     const ad = await Ad.findById(adThreeId.toString())
     expect(ad).toBeTruthy()
+    // expect(ad.imgs).toBeTruthy()
 });
 
 test("Should delete Ad", async () => {

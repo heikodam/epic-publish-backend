@@ -10,7 +10,7 @@ const userRouter = require('./routers/user');
 const adRouter = require('./routers/ad');
 const marketplaceRouter = require('./routers/marketplace');
 
-app.use(express.static(path.join(__dirname, 'client')));
+// app.use(express.static(path.join(__dirname, 'client')));
 
 
 
@@ -23,13 +23,15 @@ app.use(function(req, res, next) {
     next();
   });
 
+
+
 app.use(userRouter);
 app.use(adRouter);
 app.use(marketplaceRouter);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'../client/index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname+'/client/index.html'));
+// });
 
 
 

@@ -19,7 +19,6 @@
     "mongoose": "^5.9.6",
     "multer": "^1.4.2",
     "node-cache": "^5.1.0",
-    "path": "^0.12.7",
     "puppeteer": "^2.1.1",
     "redis-server": "^1.2.2",
     "streamifier": "^0.1.1",
@@ -27,7 +26,10 @@
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
+    "form-data": "^3.0.0",
+    "fs": "0.0.1-security",
     "jest": "^25.4.0",
+    "path": "^0.12.7",
     "supertest": "^4.0.2"
   },
   "scripts": {
