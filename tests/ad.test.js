@@ -29,23 +29,16 @@ test("Should get all ads for UserOne", async () => {
 });
 
 test("Should create ad for UserTwo", async () => {
-    // var form = new FormData();
-    // form.append('photos', fs.createReadStream(path.join(__dirname, '/resources/house.jpg')))
-
-    // form.append("formValues", JSON.stringify(adThree))
-
-    const adDataToSave = {"formValues": JSON.stringify(adThree)}
     await request(app)
     .post('/ads')
     .set('Cookie', [`token=${userTwoToken}`])
+    .field("photos", fs.createReadStream(path.join(__dirname, '/resources/house.jpg')))
     .field("formValues", JSON.stringify(adThree))
-    // .attach('photos', path.join(__dirname, '/resources/house.jpg'))
-    // .end(done)
     .expect(201)
 
     const ad = await Ad.findById(adThreeId.toString())
     expect(ad).toBeTruthy()
-    // expect(ad.imgs).toBeTruthy()
+    expect(ad.imgs.length).toEqual(1)
 });
 
 test("Should delete Ad", async () => {

@@ -1,7 +1,7 @@
 const express = require("express");
 const cote = require("cote");
 const multer = require("multer");
-// const cloudinary = require('cloudinary');
+// const cloudinary = require('cloudinary').v2;
 // const streamifier = require("streamifier");
 const {streamUpload} = require("./streamUpload");
 const NodeCache = require("node-cache");
@@ -99,7 +99,7 @@ router.post('/ads', auth, upload.array('photos', 12), async (req, responds) => {
             }    
         }
     } catch (error){
-        console.log("Catch in Upload files", error)
+        console.log("Catch in Upload files: >>>>>>>>>>>>>>>>>>>>>>>", error)
     }
     console.log("savedImgs", savedImgs);
     
